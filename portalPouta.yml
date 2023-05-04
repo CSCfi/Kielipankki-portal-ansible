@@ -20,7 +20,7 @@
         tags: backup
       - role: kielipankki.common.postfix
         tags: postfix
-      - role: ../all/roles/opsview
+      - role: kielipankki.common.opsview
         tags: opsview
       - role: mariadb
         tags: mariadb
