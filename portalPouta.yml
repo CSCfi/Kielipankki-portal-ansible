@@ -16,7 +16,7 @@
   become: yes  # sudo to root
 
   roles:
-      - role: ../all/roles/backup
+      - role: kielipankki.common.backup
         tags: backup
       - role: kielipankki.common.postfix
         tags: postfix
