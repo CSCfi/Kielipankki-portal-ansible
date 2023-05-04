@@ -1,0 +1,35 @@
+---
+
+testing: false # we usually want to run our own mysql instance.
+
+# MySQL settings
+mysql_port: '3320'
+# test instance only:
+mysql_root_password: 'uber-secret-password' # <- only used in testing
+
+# WordPress database settings
+wp_db_name: 'kielipankki_www2'
+wp_db_user: 'wordpressuser'
+wp_db_server: 'db3.csc.fi' # <- in testing redirected to localhost
+wp_db_password: "{{ lookup('passwordstore', 'lb_passwords/portal/wordpress_user')}}"
+
+local_user: "{{ lookup('env','USER') }}"
+
+# as long as webanno is proxied from here, the ip must be known:
+webanno_ip: 86.50.31.212
+
+# name Pouta dev instance using local user to avoid conflicts.
+pouta_instance_name: "portal-dev-{{ local_user }}"
+
+wp_db_install_user: "{{ db_install_user[local_user] }}"
+wp_db_install_password: "{{ lookup('passwordstore', 'lb_passwords/{{ local_user }}/db_install_user') }}"
+
+# map absilbe_user_id to db3 priviledged usernames
+db_install_user:
+  matthies: matthiesen
+  aalto: aalto
+
+# Wordpress common settings
+# set wordpress_version to "latest" for the latest version.
+wordpress_version: latest
+wordpress_admin_user_pass: "{{ lookup('passwordstore', 'lb_passwords/portal/wordpress_admin_user')}}"

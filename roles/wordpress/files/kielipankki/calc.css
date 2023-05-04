@@ -1,0 +1,4 @@
+@charset "UTF-8";
+.sosmedicons li{
+	 width: calc(100% / 7);
+}

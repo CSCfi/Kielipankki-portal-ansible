@@ -1,0 +1,15 @@
+---
+# This playbook will install MariaDB and create db user and give permissions.
+
+
+- include: install.yml
+- include: harden.yml
+- include: create_databases.yml
+
+# redirect the external database connections to localhost
+- name: Modify hosts file
+  lineinfile:
+    path: /etc/hosts
+    line: 127.0.0.1 {{ wp_db_server }}
+    state: present
+

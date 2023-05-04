@@ -1,0 +1,32 @@
+---
+# install kielipankki theme
+
+
+- name: Zip up the kielipankki theme locally
+  local_action: shell cd {{ role_path }}/files; zip -r theme-kielipankki.zip kielipankki
+  become: false
+
+- name: Copy Kielipankki theme to host
+  copy:
+    src: theme-kielipankki.zip
+    dest: "/tmp/"
+
+- name: remove the local zipped theme
+  file:
+    path: "{{ role_path }}/files/theme-kielipankki.zip"
+    state: absent
+  become: false
+  delegate_to: localhost
+
+- name: Install Kielipankki theme
+  command: "/usr/local/bin/wp theme install /tmp/theme-kielipankki.zip --activate --force"
+  args:
+    chdir: "{{ wordpress_directory }}"
+  ignore_errors: True
+  become_user: "{{ remote_deploy_user }}"
+
+- name: Remove unused twenty* themes
+  command: /usr/local/bin/wp theme delete twentyfifteen twentysixteen twentyseventeen twentynineteen twentytwenty twentytwentyone twentytwentytwo twentytwentythree
+  args:
+    chdir: "{{ wordpress_directory }}"
+  become_user: "{{ remote_deploy_user }}"

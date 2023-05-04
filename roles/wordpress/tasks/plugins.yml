@@ -1,0 +1,72 @@
+---
+# Install wordpress plugins
+
+- name: Install tools (patch, gettext)
+  yum:
+    name: [ 'patch', 'gettext' ]
+    state: present
+
+- name: copy locally kept plugins
+  copy:
+    src: wp-visual-icon-fonts.zip
+    dest: /tmp/
+
+- block:
+  - name: Install WordPress plugins (with version number)
+    command: "/usr/local/bin/wp plugin install '{{ item.name }}' --activate --force --version={{ item.version }}"
+    args:
+      chdir: "{{ wordpress_directory }}"
+    loop: "{{ wordpress_plugins_version }}"
+    become_user: "{{ remote_deploy_user }}"
+
+  - name: Install WordPress plugins
+    command: "sudo -u {{ remote_deploy_user }} /usr/local/bin/wp plugin install '{{ item.name }}' --activate {{ item.param }} "
+    args:
+      chdir: "{{ wordpress_directory }}"
+    loop: "{{ wordpress_plugins }}"
+    
+  environment:
+    WP_CLI_CACHE_DIR: "/tmp"
+
+- name: Fix missing wflogs/rules.php
+  file:
+    path: "{{ wordpress_directory }}/wp-content/wflogs/rules.php"
+    state: touch
+  become_user: "{{ remote_deploy_user }}"
+
+- name: Update plugin translations (if available)
+  command: "/usr/local/bin/wp language plugin install --all fi"
+  args:
+    chdir: "{{ wordpress_directory }}"
+  become_user: "{{ remote_deploy_user }}"
+  environment:
+    WP_CLI_CACHE_DIR: "/tmp"
+
+- name: Delete default plugins that are not used
+  command: /usr/local/bin/wp plugin delete {{item}}
+  args:
+    chdir: "{{ wordpress_directory }}"
+  with_items:
+    - akismet
+    - hello
+  become_user: "{{ remote_deploy_user }}"
+
+- name: Update WordPress plugins
+  command: "/usr/local/bin/wp plugin update --all"
+  args:
+    chdir: "{{ wordpress_directory }}"
+  become_user: "{{ remote_deploy_user }}"
+
+
+- name: Configure wp-super-cache, shibboleth
+  command: "/usr/local/bin/wp {{ item }} --path=/var/www/html"
+  args:
+    chdir: "{{ wordpress_directory }}"
+  become_user: "{{ remote_deploy_user }}"
+  loop:
+    - "plugin activate wp-super-cache"
+    - "config set WP_CACHE true --raw"
+    - "super-cache enable"
+    - "config set SHIBBOLETH_DISALLOW_FILE_MODS true --raw" # don't edit .htaccess
+    - "config set SHIBBOLETH_ATTRIBUTE_ACCESS_METHOD http"  # use headers from proxy
+    - "config set SHIBBOLETH_SPOOF_KEY {{ wp_shib_spoof_key }}"

@@ -1,0 +1,24 @@
+- name: Destroy a compute instance
+  hosts: localhost
+  vars_prompt:
+    - name: confirm
+      prompt: "Deleting VM. Hit return to proceed."
+
+  tasks:
+    - name: Info
+      debug:
+        msg: "About to delete: >>>> {{ pouta_instance_name }} <<<<"
+
+    - name: Check name
+      fail:
+        msg: "Do not remove production! Name:  {{ pouta_instance_name }}"
+      when: pouta_instance_name is not regex("-pre-prod")
+
+
+    - name: Destroy a VM
+      os_server:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+        - "{{ pouta_instance_name }}"
+      when: pouta_instance_name is regex("-pre-prod")

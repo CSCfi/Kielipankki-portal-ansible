@@ -1,0 +1,17 @@
+# enable handle updates manually!
+EPIC_SERVICE_URL      = "" # "https://epic5.storage.surfsara.nl:8004/api/handles/" 
+EPIC_SERVICE_PREFIX   = "11113" # The present Handle prefix for Kielipankki
+
+EPIC_SERVICE_KEYFILE = "{{ pid_gen_home_dir }}/311_11113_USER01.key"
+EPIC_SERVICE_CRTFILE = "{{ pid_gen_home_dir }}/311_11113_USER01.crt"
+
+# Database settings
+PID_DB_NAME= "{{ db_name }}"
+PID_DB_USER = "{{ db_user }}"
+PID_DB_PASSWORD = "{{ db_password }}"
+
+URN_PATH= "{{ pid_gen_xml_dir }}"
+RAW_FILENAME="lb_pid.txt"
+
+SOURCE_CSV_URL= "https://raw.githubusercontent.com/CSCfi/Kielipankki/master/FIN-CLARIN-Administration/lb_pid.txt"
+AUTH_TOKEN="{{ pid_github_auth_token }}"

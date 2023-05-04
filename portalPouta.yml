@@ -1,0 +1,37 @@
+# You'll need to download and source your credentials before this will work:
+#  https://research.csc.fi/pouta-credentials
+#
+
+- name: Create virtual machine on cPouta
+  hosts: localhost # The OpenStack Shade modules run by Shade on your local machine.
+
+  vars:
+  roles:
+    - role: ../all/roles/create_instances
+      tags: create_instances
+
+- name: Install Portal
+  hosts: portal-pre-prod
+  remote_user: cloud-user
+  become: yes  # sudo to root
+
+  roles:
+      - role: ../all/roles/backup
+        tags: backup
+      - role: ../all/roles/postfix
+        tags: postfix
+      - role: ../all/roles/opsview
+        tags: opsview
+      - role: mariadb
+        tags: mariadb
+      - role: apache
+        tags: apache
+      - role: php
+        tags: php
+      - role: wordpress
+        tags: wordpress
+      - role: firewall
+        tags: firewall
+      - role: pid_generator
+        tags: pid_generator
+

@@ -1,0 +1,33 @@
+---
+# import necessary files for wordpress
+
+- name: Add htaccess to wordpress root
+  template: 
+    src: wordpress-root-htaccess.j2 
+    dest: "{{wordpress_directory}}/.htaccess"
+    owner: "{{ remote_deploy_user }}"
+    
+- name: Add sum files
+  copy:
+    src: "{{ item }}"
+    dest: "{{ wordpress_directory }}"
+    owner: "{{ remote_deploy_user }}"
+    group: "{{ remote_deploy_group }}"
+  with_items:
+    - "{{ role_path }}/files/aaggr.js"
+    - "{{ role_path }}/files/attr.html"
+    - "{{ role_path }}/files/wordfence-waf.php"
+
+- name: Check if fonts have already been added 
+  stat: 
+    path: "{{ wordpress_directory }}/fonts"
+  register: fonts_dir
+
+- name: Add fonts
+  unarchive:
+    src: "{{ role_path }}/files/fonts.zip"
+    dest: "{{ wordpress_directory }}/"
+    owner: "{{ remote_deploy_user }}"
+    group: "{{ remote_deploy_group }}"
+  when: fonts_dir.stat.isdir is not defined
+

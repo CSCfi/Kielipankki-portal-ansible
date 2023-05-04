@@ -1,0 +1,8 @@
+ <Directory "{{ pid_gen_home_dir }}">
+   SetHandler cgi-script
+   Options ExecCGI
+   Options +FollowSymLinks
+   AllowOverride None
+   Order allow,deny
+   Allow from all
+ </Directory>

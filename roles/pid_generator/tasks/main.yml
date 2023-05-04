@@ -1,0 +1,106 @@
+- name: Ensure required modules
+  yum:
+    name:
+      - libselinux-python
+      - libsemanage-python
+      - python-lxml
+      - python-requests
+      - MySQL-python
+      - mailx
+    state: present
+
+- name: Disable selinux
+  selinux:
+    state: disabled
+    
+- name: Copy empty db
+  copy:
+    src: pid_map.sql
+    dest: /tmp/pid_map.sql
+
+- name: Create fresh PID database
+  mysql_db:
+    name: "{{ db_name }}"
+    state: import
+    login_user: "root" 
+    login_password: "{{ mysql_root_password }}"
+    target: /tmp/pid_map.sql
+
+- name: Create PID database user
+  mysql_user: 
+    name: "{{ db_user }}"
+    password: "{{ db_password }}"
+    priv: "{{ db_name }}.*:DROP,CREATE,SELECT,UPDATE,INSERT"
+    state: present 
+    login_user: "root" 
+    login_password: "{{ mysql_root_password }}"
+
+- name: create script dir
+  file:
+    dest: "{{ pid_gen_home_dir }}"
+    mode: 0750
+    owner: root
+    group: apache
+    state: directory
+    
+- name: create script dir
+  file:
+    dest: "{{ pid_gen_xml_dir }}"
+    mode: 0750
+    owner: apache
+    group: apache
+    state: directory
+
+- name: copy files
+  copy:
+    src: "{{ item }}"
+    dest: "{{ pid_gen_home_dir }}/{{ item }}"
+    mode: 0750
+    owner: root
+    group: apache
+  with_items:
+    - gen_pids.py
+    - gen_lat_pids.py
+    - epic5-storage-surfsara-nl-chain.pem
+#    - check_pids.py
+  tags: script-update
+
+- name: Copy certificates
+  copy:
+    content: "{{ lookup('passwordstore', '{{ pid_passwordstore }}{{ item }} returnall=true')}}"
+    dest: "{{ pid_gen_home_dir }}/{{ item }}"
+    owner: root
+    group: apache
+    mode: 0440
+  with_items:
+    - "{{ pid_epic_key }}"
+    - "{{ pid_epic_cert }}"
+
+  
+- name: copy config
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ pid_gen_home_dir }}/{{ item }}.py"
+    owner: root
+    group: apache
+    mode: 0750
+  with_items:
+    - gen_pids_conf
+    - gen_lat_pids_conf
+  tags: script-update
+
+- name: init script
+  shell: "{{ pid_gen_home_dir }}/gen_pids.py init"
+  become_user: apache
+
+- name: copy pid gen apache settings
+  template:
+    src: pid.conf.j2
+    dest: /etc/httpd/conf.d/pid.conf
+  notify:
+    - restart httpd
+
+
+ 
+
+

@@ -1,0 +1,29 @@
+---
+# Setup apache with ssl
+
+
+- name: Install httpd and unzip
+  yum: 
+    name:
+      - httpd
+      - unzip
+    state: present
+
+- name: copy httpd.conf
+  copy: 
+    src: "{{ role_path }}/files/httpd/conf/"
+    dest: /etc/httpd/conf/
+  notify: restart httpd
+
+- name: Move conf.d files
+  copy: 
+    src: "{{ role_path }}/files/httpd/conf.d/"
+    dest: /etc/httpd/conf.d/
+  notify: restart httpd
+
+- name: http service state
+  service: 
+    name: httpd 
+    state: started 
+    enabled: yes
+

@@ -1,0 +1,15 @@
+
+pid_documentroot: "/var/www/html/pid"
+
+pid_github_auth_token: "{{ lookup('passwordstore', 'lb_passwords/pid/github_auth_token')}}"
+
+pid_passwordstore: "lb_passwords/pid/"
+pid_epic_key: "311_11113_USER01.key"
+pid_epic_cert: "311_11113_USER01.crt"
+
+pid_gen_home_dir: "{{ pid_documentroot }}/script"
+pid_gen_xml_dir: "{{ pid_documentroot }}"
+
+db_name: "pid_map"
+db_user: "pid_user"
+db_password: "{{ lookup('passwordstore', 'lb_passwords/pid/db_password')}}"

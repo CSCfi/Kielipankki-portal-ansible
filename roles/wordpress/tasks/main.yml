@@ -1,0 +1,11 @@
+---
+# Install and configure wordpress
+
+
+- include: wp-cli.yml
+- include: remove_installation.yml
+- include: install.yml
+- include: theme.yml
+- include: files.yml        
+- include: plugins.yml
+- include: restore_data.yml

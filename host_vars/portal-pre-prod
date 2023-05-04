@@ -1,0 +1,18 @@
+---
+# Add variables here to overwrite the default ones in 'all'
+# Passwords must be defined here
+
+wp_db_install_user: "install_user"
+wp_db_name: 'kielipankki_db'
+wp_db_user: 'wordpressuser'
+wp_db_server: localhost
+
+wordpress_admin_user_pass: "{{ lookup('passwordstore', 'lb_passwords/pouta/portal_wp_admin')}}"
+mysql_root_password:  "{{ lookup('passwordstore', 'lb_passwords/pouta/portal_mysql_root')}}"
+wp_db_install_password: "{{ lookup('passwordstore', 'lb_passwords/pouta/portal_db_install')}}"
+wp_db_password: "{{ lookup('passwordstore', 'lb_passwords/pouta/portal_wp_db_user')}}"
+wp_shib_spoof_key: "{{ lookup('passwordstore', 'lb_passwords/portal/wp_shib_spoof_key')}}"
+
+# for backup role:
+db_install_password: "{{ wp_db_install_password }}"
+

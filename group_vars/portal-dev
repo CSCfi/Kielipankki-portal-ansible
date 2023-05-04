@@ -1,0 +1,9 @@
+---
+# Add variables here to overwrite the default ones in 'all'
+# Passwords must be defined here
+testing: true # <- do not remove
+
+wp_db_password: 'password'
+wordpress_admin_user_pass: 'this_is-password'
+mysql_root_password: 'uber-secret-password'
+

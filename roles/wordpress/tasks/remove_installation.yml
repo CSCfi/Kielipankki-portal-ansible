@@ -1,0 +1,13 @@
+---
+# Remove wordpress
+# This is normally skipped, enforce by setting
+# clean by adding --extra-vars clean=true
+
+- name: rm -rf wordpress dir
+  file: 
+    path: "{{ wordpress_directory }}"
+    state: absent
+  when: clean is defined and clean | bool
+
+
+

@@ -1,0 +1,21 @@
+---
+# create databases for wordpress
+
+
+- name: Create WordPress database
+  mysql_db:
+    name: "{{ wp_db_name }}"
+    state: present 
+    login_user: "root" 
+    login_password: "{{ mysql_root_password }}"
+
+# DROP, CREATE needed for plugins
+- name: Create WordPress database user
+  mysql_user: 
+    name: "{{ wp_db_user }}"
+    password: "{{ wp_db_password }}"
+    priv: "{{ wp_db_name }}.*:DROP,CREATE,SELECT,UPDATE,INSERT,DELETE,ALTER,INDEX,CREATE VIEW,SHOW VIEW"
+    state: present 
+    login_user: "root" 
+    login_password: "{{ mysql_root_password }}"
+

@@ -1,0 +1,43 @@
+---
+# Install wp-cli
+
+
+- name: Check if WP-CLi has been installed
+  stat:
+    path: /usr/local/bin/wp
+  register: stat_result
+
+- name: Download WP-CLI
+  get_url:
+    url: https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    dest: /root/
+  when: stat_result.stat.exists == False
+
+- name: Make WP-CLI executable
+  file:
+    path: /root/wp-cli.phar
+    mode: u=rwx,g=rx,o=rx
+  when: stat_result.stat.exists == False
+
+- name: Move WP-CLI to /usr/local/bin/wp
+  command: mv /root/wp-cli.phar /usr/local/bin/wp
+  when: stat_result.stat.exists == False
+
+- name: Ensure newest version
+  shell: yes |/usr/local/bin/wp cli update
+
+- name: Hardcode apache .wp-cli
+  file:
+    path: "/usr/share/httpd/.wp-cli"
+    owner:  "{{ remote_deploy_user }}"
+    group:  "{{ remote_deploy_group }}"
+    mode: 0755
+    state: directory
+
+- name: Install super-cache package
+  command: "php -d memory_limit=2048M /usr/local/bin/wp package install wp-cli/wp-super-cache-cli"
+  args:
+    chdir: "{{ wordpress_directory }}"
+  become_user: "{{ remote_deploy_user }}"
+
+

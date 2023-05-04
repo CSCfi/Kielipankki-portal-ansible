@@ -1,0 +1,39 @@
+---
+- name: Install Epel first
+  yum: 
+    name: epel-release
+    state: present
+
+
+- name: Install Remi's RPM repository
+  yum:
+    name: "http://rpms.remirepo.net/enterprise/remi-release-{{ ansible_distribution_major_version }}.rpm"
+    state: present
+  when: ansible_distribution == 'CentOS'
+    
+- name: Enable PHP 7.4 module
+  shell: yum-config-manager --enable remi-php74
+
+- name: Install php and its friends
+  yum: 
+    name:
+      - php
+      - php-fpm
+      - php-cli
+      - php-mysqlnd
+      - php-gd
+      - php-mbstring
+      - php-xml
+      - php-json
+      - php-pecl-memcached
+      - php-pecl-imagick
+      - php-pecl-zip
+      - php-intl
+    state: present
+
+- name: Increase memory limit
+  become: true
+  lineinfile:
+    dest: /etc/php.ini
+    regexp: "memory_limit ="
+    line: "memory_limit = 512M"

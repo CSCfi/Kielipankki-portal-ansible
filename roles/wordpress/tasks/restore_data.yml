@@ -1,0 +1,81 @@
+---
+# import wordpress data from backup
+
+# A bit cumbersome to get an english day of week
+
+- name: Get day of week
+  shell: bash -c "LANG=en; date +%a"
+  register: date_output
+  tags: ['update_wp_content', 'get_fresh_backup']
+  delegate_to: localhost
+  become: no
+
+- name: Set day of week
+  set_fact:
+    dow: "{{ date_output.stdout }}"
+  tags: ['update_wp_content', 'get_fresh_backup']
+
+- name: "Create fresh production backup"
+  command: /usr/local/bin/backup.sh backup "{{ wp_db_install_password }}"
+  tags: [ 'never', 'get_fresh_backup']
+  delegate_to: portal-prod
+
+# workaround for issue with fetch, sudo + big files.
+- name: Temporarily add read rights
+  file:
+    path: "{{ item }}"
+    mode: "o+rX"
+  delegate_to: portal-prod
+  tags: [ 'never', 'get_fresh_backup']
+  loop:
+    - "{{ backup_dir }}"
+    - "{{ backup_dir }}/{{ dow }}-{{ backup_filename }}.gz"
+
+- name: Download production backup
+  fetch:
+    src: "{{ backup_dir }}/{{ dow }}-{{ backup_filename }}.gz"
+    dest: "./"
+    flat: yes
+  tags: [ 'never', 'get_fresh_backup']
+  delegate_to: portal-prod
+  become: no #otherwise it takes for ever.
+
+# revert from above.
+- name: Remove read rights
+  file:
+    path: "{{ item }}"
+    mode: "o-rwx"
+  delegate_to: portal-prod
+  tags: [ 'never', 'get_fresh_backup']
+  loop:
+    - "{{ backup_dir }}"
+    - "{{ backup_dir }}/{{ dow }}-{{ backup_filename }}.gz"
+  
+- name: "Copy backup to host: {{ ansible_host }}"
+  copy:
+    src: "{{ dow }}-{{ backup_filename }}.gz"
+    dest: "{{ backup_dir }}"
+#  register: cp_wp_db
+  tags: update_wp_content
+
+- name: Install backup/restore script
+  template:
+    src: backup.j2
+    dest: /usr/local/bin/backup.sh
+    mode: 700
+  tags: update_wp_content
+  
+- name: Apply backup
+  command: /usr/local/bin/backup.sh restore "{{ wp_db_install_password }}"
+#  no_log: true
+  tags: update_wp_content
+
+- name: Update DB, Reactivate plugins, Flush cache
+  command: "/usr/local/bin/wp {{ item }} --path={{ wordpress_directory }}"
+  tags: update_wp_content
+  become_user: "{{ remote_deploy_user }}"
+  loop:
+    - "core update-db"
+    - "db optimize"
+    - "plugin activate --all"
+    - "super-cache flush"
