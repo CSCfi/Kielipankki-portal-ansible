@@ -7,7 +7,7 @@
 
   vars:
   roles:
-    - role: ../all/roles/create_instances
+    - role: kielipankki.common.create_instances
       tags: create_instances
 
 - name: Install Portal
