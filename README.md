@@ -54,9 +54,9 @@ The [OpenStack auth file](https://docs.csc.fi/#cloud/pouta/install-client/#confi
 
 See [Configure your terminal environment for OpenStack](https://docs.csc.fi/cloud/pouta/install-client/#configure-your-terminal-environment-for-openstack) for details.
 
-## Install ANsible requirements
+## Install Ansible requirements
 
-$ ansible-galaxy collection install -r requirements.yml
+$ ansible-galaxy install -r requirements.yml
 
 
 ## Run Ansible
