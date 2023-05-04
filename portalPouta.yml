@@ -18,7 +18,7 @@
   roles:
       - role: ../all/roles/backup
         tags: backup
-      - role: ../all/roles/postfix
+      - role: kielipankki.common.postfix
         tags: postfix
       - role: ../all/roles/opsview
         tags: opsview
