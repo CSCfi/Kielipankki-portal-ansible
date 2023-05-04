@@ -10,9 +10,8 @@ This directory contains two ansible recipes for creating a new version of the Po
 You need
 
  - Access to cPouta
- - Access to the Kielipankki shared passwords in purkki, see: https://wiki.csc.fi/Kielipankki/CredentialManagement
- - Write access to https://github.com/CSCfi/Kielipankki/
- - A recent backup of the portal from korp:/var/backup : DOW-kielipankki_portal_backup.tar.gz. DOW is a three letter abbreviation of the present day, use `LC_ALL=C date +%a` to determine it. If your backup is from the day before you must rename it.
+ - Write access to https://github.com/CSCfi/Kielipankki-portal-ansible/
+ - A recent backup of the production portal or alternatively from korp2:/var/backup : DOW-kielipankki_portal_backup.tar.gz. DOW is a three letter abbreviation of the present day, use `LC_ALL=C date +%a` to determine it. If your backup is from the day before you must rename it.
 
 
 Edit the Ansible script below servers/portal/.
@@ -42,14 +41,9 @@ Edit the Ansible script below servers/portal/.
 - Your cPouta project's [OpenStack RC file](https://docs.csc.fi/cloud/pouta/install-client/#configure-your-terminal-environment-for-openstack)
 - Key pair for cPouta instances. Created in https://pouta.csc.fi/ (Project > Compute > Key Pairs) and must be named "kielipouta".
 
-## Clone the Language Portal Git project
+## Clone the Language Portal Ansible Git project
 
-You can find the Ansible playbooks and roles needed for deploying the Languag Portal in cPouta under `Kielipankki/servers/portal`
-
-```
-$ git clone https://github.com/CSCfi/Kielipankki.git
-$ cd Kielipankki/servers/portal`
-```
+Clone this repository and navigate to the correct directory.
 
 
 ## Source your cPouta (OpenStack) auth file.
@@ -59,6 +53,10 @@ The [OpenStack auth file](https://docs.csc.fi/#cloud/pouta/install-client/#confi
 `$ source project_2000680-openrc.sh`
 
 See [Configure your terminal environment for OpenStack](https://docs.csc.fi/cloud/pouta/install-client/#configure-your-terminal-environment-for-openstack) for details.
+
+## Install ANsible requirements
+
+$ ansible-galaxy collection install -r requirements.yml
 
 
 ## Run Ansible
