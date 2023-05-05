@@ -8,12 +8,14 @@ project_key: "kielipouta"
 project_sg: "portal-sg"
 project_security_groups: "default,{{ project_sg }}" # don't add spaces here!
 
-ssh_keys: "../all/files/ssh_keys"
+ssh_keys: "../../files/ssh_keys"
 authorized_users:
   - ktegel
   - ajarven
   - kaisakui
   - matthies
+  - helhotti
+  - shardwic
 
 servers:
   - name: "{{ pouta_instance_name }}"
