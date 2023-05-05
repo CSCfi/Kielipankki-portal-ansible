@@ -316,6 +316,11 @@ table img {
 	max-width: none;
 }
 
+th.other_information, td.other_information {
+	max-width: 150px;
+}
+
+
 .leftcol blockquote, 
 .leftcol em, 
 .leftcol cite {
