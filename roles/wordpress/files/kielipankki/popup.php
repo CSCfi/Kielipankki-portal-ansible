@@ -32,20 +32,21 @@ function get_mysqli_object() {
   return $mysqli;
   }
   
-function get_corpus($mysqli, $metadata_urn) {
-  /* Function that returns the row matching a given (unique) shortname from the corpus table. */
-  $query = "SELECT * FROM corpus WHERE metadata_urn = '" . $mysqli->real_escape_string($metadata_urn) . "'";
-  $result = $mysqli->query($query);
-  if(! empty( $mysqli->error ) ) {
-    echo $mysqli->error;
+  function get_corpus($mysqli, $input) {
+    /* Function that returns the row matching a given (unique) shortname or metadata urn from the corpus table. */
+    $escaped_input = $mysqli->real_escape_string($input);
+    $query = "SELECT * FROM corpus WHERE metadata_urn = '$escaped_input' OR shortname = '$escaped_input'";
+    $result = $mysqli->query($query);
+    if(! empty( $mysqli->error ) ) {
+      echo $mysqli->error;
+    }
+    $row = $result->fetch_assoc();
+    if (!$row) {
+      die();
+    }
+    return $row;
   }
-  $row = $result->fetch_assoc();
-  if (!$row) {
-    die();
-  }
-  return $row;
-}
-
+  
 /*
 Helper function to provide localised texts. If the language cannot be found, the result defaults to English. If the localisation cannot be found the value
 is the key with a "LOCALIZE" warning in front."
