@@ -378,7 +378,7 @@ function my_content($content) {
     $content .='<p><a href="https://scholar.google.com/scholar?q='.urlencode(get_urn($row).' OR "'.get_title("fi", $row).'" OR "'.get_title("en", $row).'"').'" target="_parent">'.localize($lang,"search_scholar").'</a></p>';
   } else {
     $content .= localize($lang,"ref_heading")." <b>".$key."</b> ".localize($lang,"not_found").".<br>";
-    $content .= localize($lang,"lb_notified");
+    // $content .= localize($lang,"lb_notified");
     $to = 'matthies@csc.fi'; //for now to test
     $subject = 'Key error in reference instructions: '.$key;
     $body = 'The reference instructions were called with an unknown key.<br>Please fix on the page where it came from.<p>';
