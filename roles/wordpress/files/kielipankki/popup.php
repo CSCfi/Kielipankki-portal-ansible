@@ -30,22 +30,22 @@ function get_mysqli_object() {
     die();
   }
   return $mysqli;
-  }
+}
   
-  function get_corpus($mysqli, $input) {
-    /* Function that returns the row matching a given (unique) shortname or metadata urn from the corpus table. */
-    $escaped_input = $mysqli->real_escape_string($input);
-    $query = "SELECT * FROM corpus WHERE metadata_urn = '$escaped_input' OR shortname = '$escaped_input'";
-    $result = $mysqli->query($query);
-    if(! empty( $mysqli->error ) ) {
-      echo $mysqli->error;
-    }
-    $row = $result->fetch_assoc();
-    if (!$row) {
-      die();
-    }
-    return $row;
+function get_corpus($mysqli, $input) {
+  /* Function that returns the row matching a given (unique) metadata urn (or shortname, deprecated) from the corpus table. */
+  $escaped_input = $mysqli->real_escape_string($input);
+  $query = "SELECT * FROM corpus WHERE metadata_urn = '$escaped_input' OR shortname = '$escaped_input'";
+  $result = $mysqli->query($query);
+  if(! empty( $mysqli->error ) ) {
+    echo $mysqli->error;
   }
+  $row = $result->fetch_assoc();
+  if (!$row) {
+    die();
+  }
+  return $row;
+}
   
 /*
 Helper function to provide localised texts. If the language cannot be found, the result defaults to English. If the localisation cannot be found the value
@@ -347,53 +347,52 @@ get_header();
 
 
 <div class="content lbluebg">
-    <?php
-	/* the loop */
+<?php
+/* the loop */
 
-  function my_content($content) {
-    global $post, $key, $lang;
-    $original = $content;
-    $mysqli_connection = get_mysqli_object();
-    /* change character set to utf8mb4 */
-    $mysqli_connection->set_charset("utf8mb4");
-    $row = get_corpus($mysqli_connection, $key);
-
-    $content .= '<div class="onecol">';
-      if ($row) {
-        $content .= '<div align="right"><a href="/viittaus/?key='.urlencode($key).'&lang=fi">[suomeksi]</a> <a href="/viittaus/?key='.urlencode($key).'&lang=en">[in English]</a></div>';
-        $content .= '<h2 class="first">'.localize($lang,"ref_heading").": ".get_shortname($row).'</h2>';
-        $content .= localize($lang,"ref_intro");
-        $content .= "<p class='light'>".render_reference($lang, $row)."</p>";
-        $content .= localize($lang,"show").'<a href="#" id="show_bibtex">[Bibtex]</a>';
-        $content .=' <a href="#" id="show_zotero">[Zotero]</a>';
-        $content .='<div id="bibtex" style="display:none">';
-        $content .='<h3>Bibtex</h3>';
-        $content .= localize($lang,"bibtex_intro_text");
-        $content .='<pre class="light">'.render_bibtex($lang,$row,$key).'</pre>';
-        $content .='</div>';
-        $content .='<div id="zotero" style="display:none">';
-        $content .='<h3>Zotero</h3>';
-        $content .= localize($lang,"zotero_intro_text");
-        $content .='<pre class="light">'.render_zotero($lang,$row,$key).'</pre>';
-        $content .='</div>';
-        $content .='<p><a href="https://scholar.google.com/scholar?q='.urlencode(get_urn($row).' OR "'.get_title("fi", $row).'" OR "'.get_title("en", $row).'"').'" target="_parent">'.localize($lang,"search_scholar").'</a></p>';
-      } else {
-        $content .= localize($lang,"ref_heading")." <b>".$key."</b> ".localize($lang,"not_found").".<br>";
-        $content .= localize($lang,"lb_notified");
-        $to = 'matthies@csc.fi'; //for now to test
-        $subject = 'Key error in reference instructions: '.$key;
-        $body = 'The reference instructions were called with an unknown key.<br>Please fix on the page where it came from.<p>';
-        $body .= 'Key: '.$key."<br>";
-        $body .= 'Language: '.$lang."<br>";
-        $body .= 'Referer: '. wp_get_referer();
-        $headers = array('Content-Type: text/html; charset=UTF-8');
-
-        wp_mail( $to, $subject, $body, $headers );
-        http_response_code(404);
-      }
+function my_content($content) {
+  global $post, $key, $lang;
+  $original = $content;
+  $mysqli_connection = get_mysqli_object();
+  /* change character set to utf8mb4 */
+  $mysqli_connection->set_charset("utf8mb4");
+  $row = get_corpus($mysqli_connection, $key);
+  $content .= '<div class="onecol">';
+  if ($row) {
+    $content .= '<div align="right"><a href="/viittaus/?key='.urlencode($key).'&lang=fi">[suomeksi]</a> <a href="/viittaus/?key='.urlencode($key).'&lang=en">[in English]</a></div>';
+    $content .= '<h2 class="first">'.localize($lang,"ref_heading").": ".get_shortname($row).'</h2>';
+    $content .= localize($lang,"ref_intro");
+    $content .= "<p class='light'>".render_reference($lang, $row)."</p>";
+    $content .= localize($lang,"show").'<a href="#" id="show_bibtex">[Bibtex]</a>';
+    $content .=' <a href="#" id="show_zotero">[Zotero]</a>';
+    $content .='<div id="bibtex" style="display:none">';
+    $content .='<h3>Bibtex</h3>';
+    $content .= localize($lang,"bibtex_intro_text");
+    $content .='<pre class="light">'.render_bibtex($lang,$row,$key).'</pre>';
     $content .='</div>';
-    $mysqli_connection->close();
-    return $content;
+    $content .='<div id="zotero" style="display:none">';
+    $content .='<h3>Zotero</h3>';
+    $content .= localize($lang,"zotero_intro_text");
+    $content .='<pre class="light">'.render_zotero($lang,$row,$key).'</pre>';
+    $content .='</div>';
+    $content .='<p><a href="https://scholar.google.com/scholar?q='.urlencode(get_urn($row).' OR "'.get_title("fi", $row).'" OR "'.get_title("en", $row).'"').'" target="_parent">'.localize($lang,"search_scholar").'</a></p>';
+  } else {
+    $content .= localize($lang,"ref_heading")." <b>".$key."</b> ".localize($lang,"not_found").".<br>";
+    $content .= localize($lang,"lb_notified");
+    $to = 'matthies@csc.fi'; //for now to test
+    $subject = 'Key error in reference instructions: '.$key;
+    $body = 'The reference instructions were called with an unknown key.<br>Please fix on the page where it came from.<p>';
+    $body .= 'Key: '.$key."<br>";
+    $body .= 'Language: '.$lang."<br>";
+    $body .= 'Referer: '. wp_get_referer();
+    $headers = array('Content-Type: text/html; charset=UTF-8');
+    // disable error mailing, referrer is not set properly in proxied machine
+    // wp_mail( $to, $subject, $body, $headers );
+      http_response_code(404);
+    }
+  $content .='</div>';
+  $mysqli_connection->close();
+  return $content;
 }
 
 add_filter( 'the_content', 'my_content' );
