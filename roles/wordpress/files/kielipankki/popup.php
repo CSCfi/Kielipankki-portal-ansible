@@ -41,9 +41,6 @@ function get_corpus($mysqli, $input) {
     echo $mysqli->error;
   }
   $row = $result->fetch_assoc();
-  if (!$row) {
-    die();
-  }
   return $row;
 }
   
@@ -388,8 +385,8 @@ function my_content($content) {
     $headers = array('Content-Type: text/html; charset=UTF-8');
     // disable error mailing, referrer is not set properly in proxied machine
     // wp_mail( $to, $subject, $body, $headers );
-      http_response_code(404);
-    }
+    // status_header(404); // does not seem to work --mma
+  }
   $content .='</div>';
   $mysqli_connection->close();
   return $content;
