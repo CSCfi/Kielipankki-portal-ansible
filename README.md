@@ -121,9 +121,9 @@ This assumes that the pre-production server is otherwise ready and only needs a 
 ## Optional: Update Kielipankki Theme
 
 If you edit content in the Kielipankki theme (like popup.php or license.php) you can update it using the
-*kielipankki_theme* tag:
+*update_kielipankki_theme* tag:
 
- - `ansible-playbook -i inventories/openstack_portal_pre_prod portalPouta.yml -t kielipankki_theme
+ - `ansible-playbook -i inventories/openstack_portal_pre_prod portalPouta.yml -t update_kielipankki_theme
 
 This assumes that the pre-production server is otherwise ready.
 
