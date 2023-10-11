@@ -31,9 +31,3 @@
       - php-intl
     state: present
 
-- name: Increase memory limit
-  become: true
-  lineinfile:
-    dest: /etc/php.ini
-    regexp: "memory_limit ="
-    line: "memory_limit = 512M"

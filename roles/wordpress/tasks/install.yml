@@ -102,3 +102,10 @@
   args:
     chdir: "/var/www/html/wp-content/languages/"
   become_user: "{{ remote_deploy_user }}"
+
+- name: Configure php.ini
+  lineinfile:
+    path: "/etc/php.ini"
+    regexp: "{{ item.parameter }} ="
+    line: "{{ item.parameter }} = {{ item.value }}"
+  loop: { php_settings }
