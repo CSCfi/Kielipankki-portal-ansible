@@ -215,14 +215,6 @@ function get_url_by_id( $atts ){
 }
 add_shortcode( 'GET_PAGE_URL', 'get_url_by_id' );
 
-//Test by Martin:
-function create_reference_link(){
-	 global $lang;
-	 return "<b>".$lang."</b>";
-}
-add_shortcode('MAKE_KIELIPANKKI_REF', 'create_reference_link');
-
-
 add_filter('widget_text', 'do_shortcode');
 /* WIDGETS */
 // register Foo_Widget widget
