@@ -108,4 +108,4 @@
     path: "/etc/php.ini"
     regexp: "{{ item.parameter }} ="
     line: "{{ item.parameter }} = {{ item.value }}"
-  loop: { php_settings }
+  loop: "{{ php_settings }}"

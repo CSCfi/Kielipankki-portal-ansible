@@ -74,10 +74,10 @@ wordpress_admin_email: 'ling-admin@listat.csc.fi'
 wordpress_db_prefix: 'kpwp_'
 
 php_settings:
-	- { parameter: post_max_size,       value: 20M  }
-	- { parameter: upload_max_filesize, value: 20M  }
-	- { parameter: max_execution_time,  value: 60   }
-	- { parameter: memory_limit,        value: 512M }
+ - { parameter: post_max_size,       value: 20M  }
+ - { parameter: upload_max_filesize, value: 20M  }
+ - { parameter: max_execution_time,  value: 60   }
+ - { parameter: memory_limit,        value: 512M }
 
 backup_filename: 'kielipankki_portal_backup.tar'
 
