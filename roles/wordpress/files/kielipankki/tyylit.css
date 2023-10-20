@@ -1198,3 +1198,15 @@ table.tool_list .column-6 {
 }
 
 .close:hover { background: #00d9ff; }
+
+
+/* LBR response templates */
+
+.lbr-message-template {
+    background-color: var(--wp--preset--color--pale-pink);
+    padding: 1.25em 2.375em;
+}
+
+.lbr-message-template > p:last-child {
+    margin-bottom: 0;
+}
