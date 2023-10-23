@@ -104,8 +104,7 @@ the first run to completely reinstall wordpress.  "clean=true" wipes
 the whole /var/www/html directory. This might be overkill in some
 situations.
 
- - `cd servers/portal`
- - `ansible-playbook -i inventories/openstack_portal_pre_prod portalPouta.yml --extra-vars clean=true`
+`ansible-playbook -i inventories/openstack_portal_pre_prod portalPouta.yml --extra-vars clean=true`
 
 ## Optional: Resync content between present production and pre-production
 
