@@ -12,9 +12,7 @@ ssh_keys: "../../files/ssh_keys"
 authorized_users:
   - ktegel
   - ajarven
-  - kaisakui
   - matthies
-  - helhotti
   - shardwic
 
 servers:
