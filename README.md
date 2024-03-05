@@ -137,4 +137,4 @@ This assumes that the pre-production server is otherwise ready.
  - Update the production proxy configuration: `ansible-playbook -i inventories/production proxy.yml -t apache_config_update` 
  - The new portal instance is immediately in use and now considered production.
  - Important: RENAME the now production server manually in the cPouta dashboard from portal-pre-prod to portal-prod (or portal-prod2, if "portal-prod" is already in use. This prevents future ansible runs from changing the now renamed "portal-pre-prod".
-
+- Recommended: Test the PID generator via https://www.kielipankki.fi/pid/script/gen_pids.py

@@ -4,6 +4,7 @@ pid_documentroot: "/var/www/html/pid"
 pid_github_auth_token: "{{ lookup('passwordstore', 'lb_passwords/pid/github_auth_token')}}"
 
 pid_passwordstore: "lb_passwords/pid/"
+pid_epic_service_url: "https://epic-pid.storage.surfsara.nl:8004/api/handles/"
 pid_epic_key: "311_11113_USER01.key"
 pid_epic_cert: "311_11113_USER01.crt"
 
