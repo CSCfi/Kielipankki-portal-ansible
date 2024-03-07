@@ -133,8 +133,7 @@ This assumes that the pre-production server is otherwise ready.
   -``sudo -u apache /usr/local/bin/wp config set WP_DEBUG false --raw --path=/var/www/html``
   - ``sudo -u apache /usr/local/bin/wp super-cache flush --path=/var/www/html``
  - Make sure the menu background is now black.
- - change the proxy settings in the proxy's Ansible configuration under group-vars/all to point the variable `portal_server_ip` to point to the pre-production server's INTERNAL IP.
-- Update the production proxy configuration: `ansible-playbook -i inventories/production proxy.yml -t apache_config_update` 
+ - update IP settings in `[Kielipankki-proxy](https://github.com/CSCfi/Kielipankki-proxy)` (see README.md there)
  - The new portal instance is immediately in use and now considered production.
  - Important: RENAME the now production server manually in the cPouta dashboard from portal-pre-prod to portal-prod (or portal-prod2, if "portal-prod" is already in use. This prevents future ansible runs from changing the now renamed "portal-pre-prod".
  - Also remember to update Opsview.
