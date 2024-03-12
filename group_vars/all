@@ -97,7 +97,6 @@ wordpress_plugins:
 - { name: broken-link-checker , param: '' } # checking outgoing links
 - { name: cms-tree-page-view , param: '' } # Page management
 - { name: duplicate-post , param: '' } # Copy page as base for new page
-- { name: duplicator , param: '' } # Migrate WP (Needed?)
 - { name: formidable , param: '' } # Newsletter subscription
 - { name: post-tags-and-categories-for-pages , param: '' } # 
 - { name: media-library-plus , param: '' } # better organization of uploads
