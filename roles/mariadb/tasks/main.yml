@@ -2,9 +2,9 @@
 # This playbook will install MariaDB and create db user and give permissions.
 
 
-- include: install.yml
-- include: harden.yml
-- include: create_databases.yml
+- import_tasks: install.yml
+- import_tasks: harden.yml
+- import_tasks: create_databases.yml
 
 # redirect the external database connections to localhost
 - name: Modify hosts file

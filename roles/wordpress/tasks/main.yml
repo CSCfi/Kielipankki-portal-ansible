@@ -2,10 +2,10 @@
 # Install and configure wordpress
 
 
-- include: wp-cli.yml
-- include: remove_installation.yml
-- include: install.yml
-- include: theme.yml
-- include: files.yml        
-- include: plugins.yml
-- include: restore_data.yml
+- import_tasks: wp-cli.yml
+- import_tasks: remove_installation.yml
+- import_tasks: install.yml
+- import_tasks: theme.yml
+- import_tasks: files.yml
+- import_tasks: plugins.yml
+- import_tasks: restore_data.yml
