@@ -93,8 +93,8 @@ Only perform this step once you are happy with the "pre-prod" instance created i
 
 To create an immediate backup from production:
 
- * Make sure the staging (`portal-pre-prod`) and production (`portal-prod`) IP addresses are correctly set in `inventories/openstack_portal_pre_prod`.
- * Run ansible-playbook -i inventories/openstack_portal_pre_prod portalPouta.yml -t get_fresh_backup
+ * Make sure the staging (`portal-pre-prod`) and production (`portal-prod`) IP addresses are correctly set in `inventories/development`.
+ * Run ansible-playbook -i inventories/development portalPouta.yml -t get_fresh_backup
 
 ## Prepare the pre-production (staging) server
 
@@ -104,7 +104,7 @@ the first run to completely reinstall wordpress.  "clean=true" wipes
 the whole /var/www/html directory. This might be overkill in some
 situations.
 
-`ansible-playbook -i inventories/openstack_portal_pre_prod portalPouta.yml --extra-vars clean=true`
+`ansible-playbook -i inventories/development portalPouta.yml --extra-vars clean=true`
 
 ## Optional: Resync content between present production and pre-production
 
@@ -113,7 +113,7 @@ pre-production, get a fresh backup copy again (see above) and
 sync the content only using the *update_wp_content*
 tag:
 
- - `ansible-playbook -i inventories/openstack_portal_pre_prod portalPouta.yml -t get_fresh_backup -t update_wp_content`
+ - `ansible-playbook -i inventories/development portalPouta.yml -t get_fresh_backup -t update_wp_content`
 
 This assumes that the pre-production server is otherwise ready and only needs a content sync.
 
@@ -122,7 +122,7 @@ This assumes that the pre-production server is otherwise ready and only needs a 
 If you edit content in the Kielipankki theme (like popup.php or license.php) you can update it using the
 *update_kielipankki_theme* tag:
 
- - `ansible-playbook -i inventories/openstack_portal_pre_prod portalPouta.yml -t update_kielipankki_theme
+ - `ansible-playbook -i inventories/development portalPouta.yml -t update_kielipankki_theme
 
 This assumes that the pre-production server is otherwise ready.
 
