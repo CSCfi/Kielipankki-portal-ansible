@@ -1,3 +1,9 @@
-# Static IP settings for generated CPouta VMs. Needs to be adjusted if the IP pool changes.
-[portal-pre-prod]
-portal-pre-prod ansible_host=128.214.255.125 ansible_user=cloud-user
+all:
+  hosts:
+    localhost:
+      ansible_connection: local
+      floating_ip: 128.214.255.125
+      vm_name_postfix: pre-prod
+    portal:
+      ansible_host: 128.214.255.125
+      ansible_user: almalinux
