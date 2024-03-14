@@ -9,9 +9,10 @@
       - mailx
     state: present
 
-- name: Disable selinux
+- name: Set selinux to permissive
   selinux:
-    state: disabled
+      policy: targeted
+      state: permissive
     
 - name: Copy empty db
   copy:
