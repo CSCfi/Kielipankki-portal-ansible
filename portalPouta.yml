@@ -11,7 +11,7 @@
       tags: create_instances
 
 - name: Install Portal
-  hosts: portal-pre-prod
+  hosts: portal
   remote_user: cloud-user
   become: yes  # sudo to root
 
