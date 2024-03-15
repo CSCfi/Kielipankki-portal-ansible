@@ -3,7 +3,7 @@ instance_name: 'portal'
 vm_name_postfix: 'pre-prod'
 pouta_instance_name: "{{ instance_name }}-{{ vm_name_postfix }}"
 
-std_image: "CentOS-7"
+std_image: "AlmaLinux-9"
 project_key: "kielipouta"
 project_sg: "portal-sg"
 project_security_groups: "default,{{ project_sg }}" # don't add spaces here!
@@ -56,7 +56,6 @@ security_group_rules:
     port: 80
     allowed_ips:
       - "192.168.1.0/24" # pouta local network
-      - "86.50.28.103/32" #kielipankki-proxy.csc.fi
 
   - name: ssh
     protocol: tcp
