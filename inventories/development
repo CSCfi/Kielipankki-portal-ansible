@@ -6,4 +6,4 @@ all:
       vm_name_postfix: pre-prod
     portal:
       ansible_host: 195.148.21.204
-      ansible_user: cloud-user
+      ansible_user: almalinux
