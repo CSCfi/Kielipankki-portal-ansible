@@ -4,6 +4,8 @@
 
 - name: Create virtual machine on cPouta
   hosts: localhost # The OpenStack Shade modules run by Shade on your local machine.
+  remote_user: almalinux
+  become: false
 
   vars:
   roles:
@@ -12,7 +14,7 @@
 
 - name: Install Portal
   hosts: portal
-  remote_user: cloud-user
+  remote_user: almalinux
   become: yes  # sudo to root
 
   roles:
