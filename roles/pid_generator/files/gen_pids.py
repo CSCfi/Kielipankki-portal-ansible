@@ -3,7 +3,7 @@ from lxml import etree
 from lxml import objectify
 import datetime
 import subprocess
-import MySQLdb
+import pymysql
 import sys
 import os
 import requests
@@ -161,20 +161,20 @@ def setHandle (urnNumber, url, db_con, db_cur):
                 
 
 def xmlPrintHeader(outFile):
-    print >> outFile, '<?xml version="1.0" encoding="ASCII"?>'
-    print >> outFile, '<records xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:nbn:se:uu:ub:epc-schema:rs-location-mapping http://urn.kb.se/resolve?urn=urn:nbn:se:uu:ub:epc-schema:rs-location-mapping&amp;godirectly">'
-    print >> outFile, ' <protocol-version>3.0</protocol-version>'
-    print >> outFile, ' <datestamp type="modified">'+dateStamp+'</datestamp>'
-    print >> outFile, ''
+    print ('<?xml version="1.0" encoding="ASCII"?>', file=outFile)
+    print ('<records xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:nbn:se:uu:ub:epc-schema:rs-location-mapping http://urn.kb.se/resolve?urn=urn:nbn:se:uu:ub:epc-schema:rs-location-mapping&amp;godirectly">', file=outFile)
+    print (' <protocol-version>3.0</protocol-version>', file=outFile)
+    print (' <datestamp type="modified">'+dateStamp+'</datestamp>', file=outFile)
+    print ('', file=outFile)
 
 def xmlPrintFooter(outFine):
-    print >> outFile, "</records>"
+    print ("</records>", file=outFile)
 
 def openLocalPidDB():
     pid_db_name = PID_DB_NAME
     pid_db_user = PID_DB_USER
     pid_db_password = PID_DB_PASSWORD
-    con = MySQLdb.connect(host="localhost",
+    con = pymysql.connect(host="localhost",
                           user= pid_db_user,
                           passwd= pid_db_password,
                           db= pid_db_name)
@@ -206,8 +206,8 @@ logging.basicConfig(filename='/tmp/gen_pids_lastlog.txt', level=logging.INFO, fi
 
 try:
     (db_con, db_cur) = openLocalPidDB()
-    outFile = open(urn_target_xml_name, "wb+")
-    rawFile = open(raw_target_name, "wb+")
+    outFile = open(urn_target_xml_name, "w+")
+    rawFile = open(raw_target_name, "w+")
 
     xmlPrintHeader(outFile)
     r = requests.get(source_csv_url, auth = (auth_token, "") )
@@ -220,13 +220,14 @@ try:
     if (init == True) :
         EPIC_SERVICE_URL=""
 
-    for line in  r.iter_lines():
+    for line in r.iter_lines():
         # copy content as-is to rawFile
-        print >> rawFile, line
+        line = line.decode('utf-8')
+        print (line, file=rawFile)
         if not line.strip() or line.startswith('#'):
             continue
         (urnNumber,url) = getPidData(line)
-        print >> outFile, recordAsXML(urnNumber, url, dateStamp)
+        print (recordAsXML(urnNumber, url, dateStamp), file=outFile)
         setHandle (urnNumber, url, db_con, db_cur)
 
     xmlPrintFooter(outFile)
@@ -245,8 +246,7 @@ try:
 except Exception as e:
     if DEBUG:
         logging.exception("Exception found. Script haltet.")
-	raise # re-raise the exception                                          
-	      # traceback gets printed                                          
+
     else:
         logging.error(e.args)
         logging.error("Script halted. Fix the error and try again.")
@@ -255,7 +255,7 @@ finally:
     print("Content-type: text/html\n\n")
     print("<pre>")
     with open("/tmp/gen_pids_lastlog.txt", 'r') as log:
-        print log.read()
+        print (log.read())
     print("</pre>")
     os.system('cat /tmp/gen_pids_lastlog.txt | mailx -r kielipankki@csc.fi -s "PID Generator output" matthies@csc.fi')
     if db_con:
