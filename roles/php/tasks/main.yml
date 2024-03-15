@@ -1,21 +1,29 @@
 ---
 - name: Install Epel first
-  yum: 
+  package:
     name: epel-release
     state: present
 
+# at present we need one key
+- name: Import Remi GPG keys
+  rpm_key:
+    state: present
+    key: "{{ item }}"
+  loop:
+   - https://rpms.remirepo.net/RPM-GPG-KEY-remi2021
 
 - name: Install Remi's RPM repository
-  yum:
+  package:
     name: "http://rpms.remirepo.net/enterprise/remi-release-{{ ansible_distribution_major_version }}.rpm"
     state: present
-  when: ansible_distribution == 'CentOS'
     
-- name: Enable PHP 7.4 module
-  shell: yum-config-manager --enable remi-php74
+- name: Enable PHP module
+  dnf:
+    name: "@php:remi-8.3"
+    state: present
 
 - name: Install php and its friends
-  yum: 
+  package:
     name:
       - php
       - php-fpm
