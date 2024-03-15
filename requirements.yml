@@ -3,4 +3,4 @@
 collections:
   - name: git@github.com:CSCfi/Kielipankki-ansible-common.git
     type: git
-    version: main
+    version: KP-8026_Centos_Portal_Upd
