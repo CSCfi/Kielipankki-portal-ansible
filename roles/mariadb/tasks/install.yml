@@ -5,8 +5,8 @@
   yum_repository:
     name: MariaDB
     description: MariaDB Database repo
-    baseurl: http://yum.mariadb.org/10.5/centos7-amd64/
-    gpgkey: https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+    baseurl: https://mirror.mariadb.org/yum/11.4.1/almalinux9-amd64/
+    gpgkey: https://mirror.mariadb.org/yum/RPM-GPG-KEY-MariaDB
     gpgcheck: true
 
 
@@ -15,21 +15,7 @@
     name:
       - MariaDB-server
       - python-PyMySQL
-#      - python3-libselinux
-#      - python3-libsemanage
-#      - python3-policycoreutils
     state: present
-
-  # se stuff disabled:
-- name: Configure SELinux to start mysql on any port
-  command: "semanage port -a -t mysqld_port_t -p tcp {{mysql_port}}"
-  ignore_errors: yes # <- ignore errors to be able to run the playbook multiple time
-  when: false
-
-- name: Allow httpd to connect to database
-  command: setsebool -P httpd_can_network_connect_db on
-  ignore_errors: yes # <- ignore errors to be able to run the playbook multiple times
-  when: false
 
 - name: Create Mysql configuration file
   template: 
