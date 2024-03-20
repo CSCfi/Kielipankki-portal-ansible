@@ -4,6 +4,7 @@ all:
       ansible_connection: local
       floating_ip: 195.148.21.204
       vm_name_postfix: pre-prod
+      ansible_python_interpreter: python
     portal:
       ansible_host: 195.148.21.204
       ansible_user: almalinux
