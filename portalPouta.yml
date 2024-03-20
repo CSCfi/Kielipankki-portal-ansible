@@ -14,7 +14,6 @@
 
 - name: Install Portal
   hosts: portal
-  remote_user: almalinux
   become: yes  # sudo to root
 
   roles:
