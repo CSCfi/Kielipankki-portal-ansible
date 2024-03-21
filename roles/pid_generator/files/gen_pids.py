@@ -70,7 +70,7 @@ def send_request (handle,url,register):
     json_obj = create_url_json(url)
 
     #create the headers
-    headers = {'Content-Type': 'application/json', 'Authorization': 'Handle clientCert="true"','Content-Length': len(json_obj)}
+    headers = {'Content-Type': 'application/json', 'Authorization': 'Handle clientCert="true"','Content-Length': str(len(json_obj))}
  
     r = requests.put(service_url+handle, data=json_obj, cert=(service_crtfile, service_keyfile), headers=headers, verify="epic5-storage-surfsara-nl-chain.pem" )
     
@@ -124,7 +124,7 @@ def recordAsXML(urnNumber, url, dateStamp):
     objectify.deannotate(record, xsi_nil=True)
     etree.cleanup_namespaces(record)
     # pretty print string to keep XML somewhat human readable
-    return etree.tostring(record, pretty_print=True)
+    return etree.tostring(record, pretty_print=True, encoding='unicode')
 
 def getPidData(line):
     row = line.split()
@@ -200,39 +200,34 @@ urn_target_xml_name  = urn_path + "/urn_nbn_fi_lb.xml"
 raw_target_name  = urn_path + "/" + raw_filename
 
 # put "True" here to get more verbosity
-DEBUG=False #True
+DEBUG=False
+# DEBUG=True
+
 
 logging.basicConfig(filename='/tmp/gen_pids_lastlog.txt', level=logging.INFO, filemode='w')
 
 try:
     (db_con, db_cur) = openLocalPidDB()
-    outFile = open(urn_target_xml_name, "w+")
-    rawFile = open(raw_target_name, "w+")
-
-    xmlPrintHeader(outFile)
-    r = requests.get(source_csv_url, auth = (auth_token, "") )
-
     # at init sync db with pid db without registering handles
     # unset EPIC_SERVICE_URL
-
     init = ( len(sys.argv) == 2 and sys.argv[1] == "init" )
-
     if (init == True) :
         EPIC_SERVICE_URL=""
 
-    for line in r.iter_lines():
-        # copy content as-is to rawFile
-        line = line.decode('utf-8')
-        print (line, file=rawFile)
-        if not line.strip() or line.startswith('#'):
-            continue
-        (urnNumber,url) = getPidData(line)
-        print (recordAsXML(urnNumber, url, dateStamp), file=outFile)
-        setHandle (urnNumber, url, db_con, db_cur)
+    with open(urn_target_xml_name, 'w') as outFile, open(raw_target_name, "w") as rawFile:
+        xmlPrintHeader(outFile)
+        r = requests.get(source_csv_url, auth = (auth_token, "") )
 
-    xmlPrintFooter(outFile)
-    outFile.close()
-    rawFile.close()
+        for line in r.iter_lines():
+            # copy content as-is to rawFile
+            line = line.decode('utf-8')
+            rawFile.write(line)
+            if not line.strip() or line.startswith('#'):
+                continue
+            (urnNumber,url) = getPidData(line)
+            outFile.write(recordAsXML(urnNumber, url, dateStamp))
+            setHandle (urnNumber, url, db_con, db_cur)
+        xmlPrintFooter(outFile)
 
     if init:
         logging.info ("Script installed, database initialized.")
