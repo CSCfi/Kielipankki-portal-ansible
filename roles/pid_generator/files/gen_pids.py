@@ -1,4 +1,3 @@
-
 #!/usr/bin/python
 from lxml import etree
 from lxml import objectify
@@ -162,14 +161,14 @@ def setHandle (urnNumber, url, db_con, db_cur):
                 
 
 def xmlPrintHeader(outFile):
-    print ('<?xml version="1.0" encoding="ASCII"?>', file=outFile)
-    print ('<records xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:nbn:se:uu:ub:epc-schema:rs-location-mapping http://urn.kb.se/resolve?urn=urn:nbn:se:uu:ub:epc-schema:rs-location-mapping&amp;godirectly">', file=outFile)
-    print (' <protocol-version>3.0</protocol-version>', file=outFile)
-    print (' <datestamp type="modified">'+dateStamp+'</datestamp>', file=outFile)
-    print ('', file=outFile)
+    outFile.write('<?xml version="1.0" encoding="ASCII"?>')
+    outFile.write ('<records xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:nbn:se:uu:ub:epc-schema:rs-location-mapping http://urn.kb.se/resolve?urn=urn:nbn:se:uu:ub:epc-schema:rs-location-mapping&amp;godirectly">')
+    outFile.write (' <protocol-version>3.0</protocol-version>')
+    outFile.write (' <datestamp type="modified">'+dateStamp+'</datestamp>')
+    outFile.write ('')
 
-def xmlPrintFooter(outFine):
-    print ("</records>", file=outFile)
+def xmlPrintFooter(outFile):
+    outFile.write ("</records>")
 
 def openLocalPidDB():
     pid_db_name = PID_DB_NAME
