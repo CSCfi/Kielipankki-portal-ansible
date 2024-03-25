@@ -34,7 +34,7 @@ case "$MODE" in
     
  backup)
 	#dump to sql file
-	mysqldump --add-drop-table --single-transaction \
+	mariadb-dump --add-drop-table --single-transaction \
 	    -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASSWORD \
 	    $DB_NAME  > $BACKUP_DIR/$DB_BACKUP_FILE
 	#add sql to tar
