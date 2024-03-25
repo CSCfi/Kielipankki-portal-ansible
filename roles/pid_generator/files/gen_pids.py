@@ -1,3 +1,4 @@
+
 #!/usr/bin/python
 from lxml import etree
 from lxml import objectify
@@ -241,6 +242,8 @@ try:
 except Exception as e:
     if DEBUG:
         logging.exception("Exception found. Script haltet.")
+        raise # re-raise the exception                                          
+	      # traceback gets printed 
 
     else:
         logging.error(e.args)
