@@ -4,7 +4,6 @@
     name: epel-release
     state: present
 
-# at present we need one key
 - name: Import Remi GPG keys
   rpm_key:
     state: present
