@@ -257,7 +257,7 @@ try:
         for line in r.iter_lines():
             # copy content as-is to rawFile
             line = line.decode("utf-8")
-            rawFile.write(line)
+            rawFile.write(line + "\n")
             if not line.strip() or line.startswith("#"):
                 continue
             (urnNumber, url) = getPidData(line)
