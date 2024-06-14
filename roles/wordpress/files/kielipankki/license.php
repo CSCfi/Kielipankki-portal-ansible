@@ -542,9 +542,6 @@ if ( have_posts() ) {
 	} // end while
 } // end if
 	?>
-	<div class="ccomme">
-	<?php comments_template(); ?> 
-	</div>
 </div>
 </div>    
 <?php
