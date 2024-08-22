@@ -2,6 +2,7 @@
 instance_name: 'portal'
 vm_name_postfix: 'pre-prod'
 pouta_instance_name: "{{ instance_name }}-{{ vm_name_postfix }}"
+network: "project_2000680"
 
 std_image: "AlmaLinux-9"
 project_key: "kielipouta"
@@ -35,8 +36,10 @@ servers:
     flavor: standard.medium
     key_name: "{{ project_key }}"
     security_groups: "{{ project_security_groups }}"
+    network: "{{ network }}"
     meta:
-      group: default
+       hostname: "{{ pouta_instance_name }}"
+       group: "{{ instance_name }}"
 
 security_group_rules:
   - name: ping
@@ -45,27 +48,11 @@ security_group_rules:
     allowed_ips:
       - "193.167.254.68/32" #opsview
 
-  - name: nagios
-    protocol: tcp
-    port: 5666
-    allowed_ips:
-      - "193.167.254.68/32" #opsview
-
   - name: http
     protocol: tcp
     port: 80
     allowed_ips:
       - "192.168.1.0/24" # pouta local network
-
-  - name: ssh
-    protocol: tcp
-    port: 22
-    allowed_ips:
-      - "193.166.1.0/24" #CSC Office
-      - "193.166.2.0/24" #CSC Office
-      - "193.166.84.0/24" #CSC VPN
-      - "193.166.85.0/24" #CSC VPN
-      - "86.50.31.6/32"  #Korp2
 
 # backup_dir
 backup_dir: /var/backup
