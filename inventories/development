@@ -2,11 +2,11 @@ all:
   hosts:
     localhost:
       ansible_connection: local
-      floating_ip: 86.50.170.142
+      floating_ip: 128.214.253.151
       vm_name_postfix: pre-prod
       ansible_python_interpreter: python
     portal:
-      ansible_host: 86.50.170.142
+      ansible_host: 128.214.253.151
       ansible_user: almalinux
     portal-prod:
       ansible_host: 195.148.21.204
