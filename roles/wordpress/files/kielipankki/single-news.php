@@ -3,21 +3,20 @@
 	Template Name: Single News (EN)
 */
 
-$lang = get_field('lang');
-
-if (!$lang) {
-  $lang='en'; 
-}
-
+$lang='en';
+$show_last_modified = get_field('show_last_modified');
+$lang_locale = 'lang="en-GB"';
 
 ?>
+
 <!doctype html>
-<!--[if lt IE 7 ]><html class="ie ie6" <?php language_attributes(); ?>> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" <?php language_attributes(); ?>> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" <?php language_attributes(); ?>> <![endif]-->
+<!--[if lt IE 7 ]><html class="ie ie6" <?php echo $lang_locale; ?>> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" <?php echo $lang_locale; ?>> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" <?php echo $lang_locale; ?>> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
-<html <?php language_attributes(); ?>>
+<html <?php echo $lang_locale; ?>>
 <!--<![endif]-->
+
 <?php
 get_header();
 ?>
@@ -108,6 +107,9 @@ wp_nav_menu( $men );
     <div class="leftcol">
     <?php
 	/* the loop */
+    if ($show_last_modified) {
+        make_last_modified($lang);
+    }
 
 if ( have_posts() ) {
 	while ( have_posts() ) {

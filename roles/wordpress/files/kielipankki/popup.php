@@ -7,16 +7,24 @@
 
  */
 
+$supported_languages = array('fi', 'en');
+
 $lang ="en";
 
 if (isset ($_GET['lang'])) {
     $lang = $_GET['lang'];
 }
 
+if (! in_array($lang, $supported_languages)) {
+   $lang='en';
+}
 
-// Only fi/en supportet so far, sv=en.
-if($lang == "sv") {
-    $lang="en";
+if ($lang=='fi') {
+    $lang_locale = 'lang="fi"';
+}
+
+if ($lang=='en') {
+    $lang_locale = 'lang="en-GB"';
 }
 
 $key = $_GET['key'];
@@ -318,15 +326,14 @@ function render_zotero($lang,$row, $key) {
 }
 
 ?>
-
 <!doctype html>
-<!--[if lt IE 7 ]><html class="ie ie6" <?php language_attributes(); ?>> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" <?php language_attributes(); ?>> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" <?php language_attributes(); ?>> <![endif]-->
+<!--[if lt IE 7 ]><html class="ie ie6" <?php echo $lang_locale; ?>> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" <?php echo $lang_locale; ?>> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" <?php echo $lang_locale; ?>> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
-<html  style="margin-top: 1em !important" lang="<?php echo $lang; ?>">
+<html style="margin-top: 1em !important" <?php $echo lang_locale; ?>>
+<!--<![endif]-->
 
-    <!--<![endif]-->
     <?php
     get_header();
     ?>
@@ -349,6 +356,10 @@ function render_zotero($lang,$row, $key) {
 
 	<div class="content lbluebg">
 	    <?php
+        if ($show_last_modified) {
+        make_last_modified($lang);
+    }
+
 	    /* the loop */
 
 	    function my_content($content) {

@@ -3,25 +3,8 @@
 	Template Name: 2 column – Generic
 */
 
-if (function_exists('get_field')) {
-  $lang = get_field('lang');
-}
+include 'init_page.php';
 
-if (!$lang) {
-  $lang='fi'; 
-}
-
-
-?>
-<!doctype html>
-<!--[if lt IE 7 ]><html class="ie ie6" <?php language_attributes(); ?>> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" <?php language_attributes(); ?>> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" <?php language_attributes(); ?>> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!-->
-<html <?php language_attributes(); ?>>
-<!--<![endif]-->
-<?php
-get_header();
 ?>
 
 <body>
@@ -99,6 +82,9 @@ wp_nav_menu( $men );
     <div class="leftcol">
     <?php
 	/* the loop */
+    if ($show_last_modified) {
+        make_last_modified($lang);
+    }
 
 if ( have_posts() ) {
 

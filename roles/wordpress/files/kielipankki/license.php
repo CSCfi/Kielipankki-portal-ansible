@@ -15,17 +15,27 @@ if (! in_array($lang, $supported_languages)) {
    $lang='en';
 }
 
+if ($lang=='fi') {
+    $lang_locale = 'lang="fi"';
+}
+
+if ($lang=='en') {
+    $lang_locale = 'lang="en-GB"';
+}
+
+$show_last_modified = get_field('show_last_modified');
+
 // if this date is newer than the license's last change date,
 // it will be used instead of the date of the license
 $licence_template_last_updated = '24.5.2022';
 
 ?>
 <!doctype html>
-<!--[if lt IE 7 ]><html class="ie ie6" <?php language_attributes(); ?>> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" <?php language_attributes(); ?>> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" <?php language_attributes(); ?>> <![endif]-->
+<!--[if lt IE 7 ]><html class="ie ie6" <?php echo $lang_locale; ?>> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" <?php echo $lang_locale; ?>> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" <?php echo $lang_locale; ?>> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
-<html <?php language_attributes(); ?>>
+<html <?php echo $lang_locale; ?>>
 <!--<![endif]-->
 <?php
 get_header();

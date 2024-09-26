@@ -15,7 +15,20 @@ if (current_user_can('subscriber')) {
 }
 }
 
-
+// Return a "last modified" field
+function make_last_modified($lang) {
+  echo "<p><strong>\n";
+  if ($lang=='en') {
+    echo "Last modified on ";
+  }
+  if ($lang=='fi') {
+    echo "Viimeksi muokattu ";
+  }
+  if ($lang=='sv') {
+    echo "Senast ändrad ";
+  }
+   echo get_the_modified_date() . "\n</p></strong>\n";
+}
 
 /*
  return set of laundry tags from custom fields.
