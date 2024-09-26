@@ -2,9 +2,6 @@
 /*
 	Template Name: Corpus Table  – Generic
 */
-$supported_languages = array('fi', 'en', 'sv'); 
-
-$lang;
 
 // get setting from custom field, default to "en".
 $lang = get_field('lang');
@@ -12,6 +9,11 @@ $lang = get_field('lang');
 if (!$lang) {
   $lang='en'; 
 }
+
+$show_last_modified = get_field('show_last_modified');
+
+$supported_languages = array('fi', 'en', 'sv');
+
 
 // is lang provided as URL parameter?
 
@@ -29,6 +31,18 @@ if (array_key_exists('lang', $_GET)) {
   }
 }
 
+if ($lang=='fi') {
+    $lang_locale = 'lang="fi"';
+}
+
+if ($lang=='en') {
+    $lang_locale = 'lang="en-GB"';
+}
+
+if ($lang=='sv') {
+    $lang_locale = 'lang="sv-FI"';
+}
+
 $i18n = array(
     'MAIN_MENU' => array (
         'en' => 'Main menu - English',
@@ -40,11 +54,11 @@ $i18n = array(
 
 ?>
 <!doctype html>
-<!--[if lt IE 7 ]><html class="ie ie6" <?php language_attributes(); ?>> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" <?php language_attributes(); ?>> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" <?php language_attributes(); ?>> <![endif]-->
+<!--[if lt IE 7 ]><html class="ie ie6" <?php echo $lang_locale; ?>> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" <?php echo $lang_locale; ?>> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" <?php echo $lang_locale; ?>> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
-<html <?php language_attributes(); ?>>
+<html <?php echo $lang_locale; ?>>
 <!--<![endif]-->
 
 <?php
@@ -111,8 +125,11 @@ wp_nav_menu( $men );
   <div class="container">
     <div class="onecol">
     <?php
-	/* the loop */
+    if ($show_last_modified) {
+        make_last_modified($lang);
+    }
 
+	/* the loop */
 if ( have_posts() ) {
 	while ( have_posts() ) {
 		the_post(); 
