@@ -91,10 +91,6 @@ wp_nav_menu( $men );
   <div class="container">
     <div class="leftcol">
     <?php
-        if ($show_last_modified) {
-        make_last_modified($lang);
-    }
-
 	/* the loop */
 
 if ( have_posts() ) {
