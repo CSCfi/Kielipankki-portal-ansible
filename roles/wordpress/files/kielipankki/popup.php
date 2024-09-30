@@ -30,7 +30,7 @@ if ($lang=='en') {
 $key = $_GET['key'];
 
 function get_mysqli_object() {
-    /* Function that first gets required username and password details needed to access WordPress database 
+    /* Function that first gets required username and password details needed to access WordPress database
        and then, with those, returns a mysqli object if no errors occur. */
     require_once('/var/www/html/wp-config.php');
     $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
@@ -92,7 +92,7 @@ function localize($lang,$key) {
     $localized_string=$l18n[$lang][$key];
     if ($localized_string) {
 	return $localized_string;
-    } 
+    }
     else {
 	// Fallback: Return key with warning.
 	return "LOCALIZE:".$key;
@@ -231,7 +231,7 @@ function get_publisher() {
 
 function render_type($lang, $row) {
     return "[".get_type($lang, $row)."]";
-} 
+}
 
 /*
    Get the type code and translate (eg. T > text corpus).
@@ -240,7 +240,7 @@ function render_type($lang, $row) {
 function get_type($lang, $row) {
     $type = $row['type'];
     return localize($lang,$type);
-} 
+}
 
 /*
    Turn the URN into a link.
@@ -355,10 +355,6 @@ function render_zotero($lang,$row, $key) {
 
 
 	<div class="content lbluebg">
-	    <?php
-        if ($show_last_modified) {
-        make_last_modified($lang);
-    }
 
 	    /* the loop */
 
@@ -431,6 +427,11 @@ function render_zotero($lang,$row, $key) {
 		    the_content();
 		} // end while
 	    } // end if
+	    <?php
+        if ($show_last_modified) {
+        make_last_modified($lang);
+    }
+
 	    ?>
 	</div>
     </body>
