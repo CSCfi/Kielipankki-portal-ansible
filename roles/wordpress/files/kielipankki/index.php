@@ -9,7 +9,7 @@ include 'init_page.php';
 
 <body>
 <header class="header" role="banner">
-<?php 
+<?php
 global $post;
 
 
@@ -32,7 +32,7 @@ if (has_post_thumbnail()){
 } else {
 /*
 no post_thumbnail
-check if page has parent, if it does, check if parent does have post_thumbnail 
+check if page has parent, if it does, check if parent does have post_thumbnail
 */
 if(intval($post->post_parent) > 0){
 	$ppthumb = get_the_post_thumbnail( intval($post->post_parent), 'full' );
@@ -72,7 +72,7 @@ $men = array(
 );
 
 wp_nav_menu( $men );
-  
+
   ?>
     <div class="nav-mobile" id="mobile-nav"> <a href="#mobile-nav" class="mobile-nav-trigger"><span class="fontawesome-reorder"></span></a> </div>
   </nav>
@@ -82,25 +82,26 @@ wp_nav_menu( $men );
     <div class="leftcol">
     <?php
 	/* the loop */
-    if ($show_last_modified) {
-        make_last_modified($lang);
-    }
 
 if ( have_posts() ) {
 
 	while ( have_posts() ) {
-		the_post(); 
+		the_post();
 		the_content();
 	} // end while
 } // end if
-if( WP_DEBUG === true ) { 
+    if ($show_last_modified) {
+        make_last_modified($lang);
+    }
+
+if( WP_DEBUG === true ) {
     echo '<b>DEBUG: This pages is served by host:'.gethostname().'</b>';
 }
-	
-	
+
+
 	?>
 	<div class="ccomme">
-	<?php comments_template(); ?> 
+	<?php comments_template(); ?>
 	</div>
     </div>
     <div class="rightcol">
@@ -112,7 +113,7 @@ if( WP_DEBUG === true ) {
 
 	?>
     </div>
-    
+
 </div>
 <?php
 get_footer();
