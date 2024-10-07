@@ -58,13 +58,6 @@
 #  register: cp_wp_db
   tags: update_wp_content
 
-- name: Install backup/restore script
-  template:
-    src: backup.j2
-    dest: /usr/local/bin/backup.sh
-    mode: 700
-  tags: update_wp_content
-  
 - name: Apply backup
   command: /usr/local/bin/backup.sh restore "{{ wp_db_install_password }}"
 #  no_log: true
