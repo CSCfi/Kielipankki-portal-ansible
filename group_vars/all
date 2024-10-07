@@ -28,7 +28,11 @@ wp_db_password: "{{ lookup('passwordstore', 'lb_passwords/pouta/portal_wp_db_use
 wp_shib_spoof_key: "{{ lookup('passwordstore', 'lb_passwords/portal/wp_shib_spoof_key')}}"
 
 # for backup role:
-db_install_password: "{{ wp_db_install_password }}"
+backup_db_server:   "{{ wp_db_server }}"
+backup_db_port:     "{{ mylsql_port }}"
+backup_db_name:     "{{ wp_db_name }}"
+backup_db_user:     "{{ wp_db_install_user }}"
+backup_db_password: "{{ wp_db_install_password }}"
 
 servers:
   - name: "{{ pouta_instance_name }}"
