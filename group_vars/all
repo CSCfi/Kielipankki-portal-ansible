@@ -29,10 +29,14 @@ wp_shib_spoof_key: "{{ lookup('passwordstore', 'lb_passwords/portal/wp_shib_spoo
 
 # for backup role:
 backup_db_server:   "{{ wp_db_server }}"
-backup_db_port:     "{{ mylsql_port }}"
+backup_db_port:     "{{ mysql_port }}"
 backup_db_name:     "{{ wp_db_name }}"
 backup_db_user:     "{{ wp_db_install_user }}"
 backup_db_password: "{{ wp_db_install_password }}"
+backup_data_root_directory: "{{ wordpress_directory }}/wp-content"
+backup_data_subdirectory:   "uploads"
+backup_remote_deploy_user:  "{{ remote_deploy_user }}"
+backup_remote_deploy_group: "{{ remote_deploy_group }}"
 
 servers:
   - name: "{{ pouta_instance_name }}"
