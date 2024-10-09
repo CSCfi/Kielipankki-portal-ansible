@@ -331,7 +331,7 @@ function render_zotero($lang,$row, $key) {
 <!--[if IE 7 ]><html class="ie ie7" <?php echo $lang_locale; ?>> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" <?php echo $lang_locale; ?>> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
-<html style="margin-top: 1em !important" <?php $echo lang_locale; ?>>
+<html style="margin-top: 1em !important" <?php echo $lang_locale; ?>>
 <!--<![endif]-->
 
     <?php
@@ -355,7 +355,7 @@ function render_zotero($lang,$row, $key) {
 
 
 	<div class="content lbluebg">
-
+	    <?php
 	    /* the loop */
 
 	    function my_content($content) {
@@ -427,7 +427,7 @@ function render_zotero($lang,$row, $key) {
 		    the_content();
 		} // end while
 	    } // end if
-	    <?php
+
         if ($show_last_modified) {
         make_last_modified($lang);
     }
