@@ -62,6 +62,12 @@ security_group_rules:
     allowed_ips:
       - "192.168.1.0/24" # pouta local network
 
+  - name: ssh
+    protocol: tcp
+    port: 22
+    allowed_ips:
+      - "86.50.56.187/32" # korp3
+
 # backup_dir
 backup_dir: /var/backup
 
