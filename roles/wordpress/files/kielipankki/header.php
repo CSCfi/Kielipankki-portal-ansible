@@ -4,7 +4,7 @@
 <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic' rel='stylesheet' type='text/css'>
 <link href="<?php echo get_template_directory_uri(); ?>/tyylit.css" rel="stylesheet" type="text/css">
 <?php if( WP_DEBUG === true ) { echo '<link href="'.get_template_directory_uri().'/tyylit_debug.css" rel="stylesheet" type="text/css">'; } ?>
-<script src="<?php echo get_template_directory_uri(); ?>/js/modernizr_2_8_3_custom.js"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/js/modernizr_3_6_0_custom.js"></script>
 <script src="<?php echo get_template_directory_uri(); ?>/js/jquery-3.7.1.min.js"></script>
 <script src="<?php echo get_template_directory_uri(); ?>/js/SimpleCssParser.js" type="text/javascript"></script>
 <script src="<?php echo get_template_directory_uri(); ?>/js/polycalc.js" type="text/javascript"></script>
