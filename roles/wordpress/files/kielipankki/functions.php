@@ -46,7 +46,7 @@ function create_post_type() {
       'has_archive' => true,
 	  'menu_position' => 5,
 	  'menu_icon' => 'dashicons-media-text',
-	  'taxonomies' => array('category'),
+	  'taxonomies' => array('category', 'post_tag'),
 	  'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'revisions' )
     )
   );
@@ -62,7 +62,7 @@ function create_post_type() {
       'has_archive' => true,
 	  'menu_position' => 6,
 	  'menu_icon' => 'dashicons-media-text',
-	  'taxonomies' => array('category'),
+	  'taxonomies' => array('category', 'post_tag'),
 	  'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'revisions' )
     )
   );
