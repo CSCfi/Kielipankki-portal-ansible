@@ -68,12 +68,12 @@ function create_post_type() {
   );
 
 /* what is this? -- mma 4.7.19
-$args = array( 
+$args = array(
       'hierarchical' => true,
       'labels' => $labels,
       'show_ui' => true,
       'show_admin_column' => true,
-      'query_var' => true, 
+      'query_var' => true,
       );
 
   //  register_taxonomy_for_object_type( 'category', 'uutiset' );
@@ -87,7 +87,7 @@ $args = array(
 function custom_theme_setup() {
 	add_theme_support( 'post-thumbnails', array( 'page', 'post', 'uutiset', 'news' ) );
 	add_theme_support( 'menus');
-	add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption' ) );    
+	add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption' ) );
 
 	register_sidebar( array(
         'name' => __( 'Default Sidebar Fin', '' ),
@@ -106,7 +106,7 @@ function custom_theme_setup() {
 	'after_widget'  => '',
 	'before_title'  => '<div>',
 	'after_title'   => '</div>',
-    ) ); 
+    ) );
 	register_sidebar( array(
         'name' => __( 'Default Sidebar Swe', '' ),
         'id' => 'sidebar-1-swe',
@@ -115,7 +115,7 @@ function custom_theme_setup() {
 	'after_widget'  => '',
 	'before_title'  => '<div>',
 	'after_title'   => '</div>',
-    ) ); 
+    ) );
 
     	register_sidebar( array(
         'name' => __( 'Footer Fin', '' ),
@@ -162,7 +162,7 @@ function custom_theme_setup() {
 	'after_widget'  => '',
 	'before_title'  => '<div>',
 	'after_title'   => '</div>',
-    ) ); 
+    ) );
 
 	register_sidebar( array(
         'name' => __( '404 Sidebar Fin', '' ),
@@ -193,9 +193,9 @@ function custom_theme_setup() {
     ) );
 }
 
-function wpb_list_child_pages() { 
+function wpb_list_child_pages() {
 
-global $post; 
+global $post;
 
 if ( is_page() && $post->post_parent )
 
