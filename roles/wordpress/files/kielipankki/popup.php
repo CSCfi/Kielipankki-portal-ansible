@@ -73,6 +73,7 @@ function localize($lang,$key) {
 	    "search_scholar" => "Etsi viittauksia aineistoon Google Scholar -palvelusta.",
 	    "not_found" => "ei löytynyt",
 	    "lb_notified" => "Ilmoitus on lähetetty Kielipankin ylläpidolle.",
+	    "forthcoming" => "tulossa"
 	),
 	"en" => array(
 	    "data set" => "data set", /* generic */
@@ -85,6 +86,7 @@ function localize($lang,$key) {
 	    "search_scholar" => "Search for references to the language resource in Google Scholar",
 	    "not_found" => "not found",
 	    "lb_notified" => "The Language Bank administrators will be notified.",
+	    "forthcoming" => "forthcoming",
 	)
     );
 
@@ -103,8 +105,8 @@ function localize($lang,$key) {
    Renders author(s) and date. A missing author will not render a date
  */
 function render_author_date($lang, $row) {
-    $authors=get_authors($lang,$row);
-    $date=render_date($row);
+    $authors=get_authors($lang ,$row);
+    $date=render_date($lang, $row);
     $author_date="";
     $author_count=count($authors);
     if ($authors) {
@@ -182,8 +184,8 @@ function get_authors($lang, $row) {
    Render the date as (date).
  */
 
-function render_date($row) {
-    $date=get_date($row);
+function render_date($lang, $row) {
+    $date=get_date($row, $lang);
     if ($date) {
 	$date_parts=explode("-", $date);
 	return " (".$date_parts[0].")";
@@ -192,8 +194,14 @@ function render_date($row) {
     }
 }
 
-function get_date($row) {
-    return $row['first_publication_date'];
+function get_date($row, $lang) {
+    $date = $row['language_bank_publication_date'];
+    $corpus_status = $row['corpus_status'];
+    if ($corpus_status == "upcoming") {
+      return localize($lang, "forthcoming");
+    } else {
+      return $date;
+    }
 }
 
 /*
@@ -283,7 +291,7 @@ function render_bibtex($lang,$row, $key) {
     $bibtex="";
     $author_list = get_authors($lang,$row);
     if ($author_list) $authors = str_replace("  "," ",implode(" and ", $author_list));
-    $year   = get_date($row);
+    $year   = get_date($row, $lang);
     $type   = get_type($lang,$row);
     $bibtex .= "@misc{".get_shortname($row)."_".$lang.",\n";
     if ($authors) {
@@ -309,7 +317,7 @@ function render_zotero($lang,$row, $key) {
     $bibtex="";
     $author_list = get_authors($lang,$row);
     if ($author_list) $authors = str_replace("  "," ",implode(" and ", $author_list));
-    $year   = get_date($row);
+    $year   = get_date($row, $lang);
     $type   = get_type($lang,$row);
     $bibtex .= "@techreport{".get_shortname($row)."_".$lang.",\n";
     if ($authors) {
@@ -428,7 +436,7 @@ function render_zotero($lang,$row, $key) {
 		} // end while
 	    } // end if
 
-        if ($show_last_modified) {
+        if (isset($show_last_modified)) {
         make_last_modified($lang);
     }
 
