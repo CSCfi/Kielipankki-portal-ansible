@@ -63,10 +63,10 @@ function get_corpus($mysqli, $input) {
 function localize($lang,$key) {
     static $l18n = array(
 	"fi" => array(
-	    "data set" => "korpus", /* generic */
+	    "data set" => "aineisto", /* generic */
 	    "ref_heading" => "Viittausohje",
 	    "ref_intro" => "Viittaa kielivaraan näin:",
-	    "bibtex_intro_text" => "Kopioi koodi alla bibtex-kirjastoosi. Koodi on testattu apacite.sty-tyyillä. Kenttä <code>url</code> ei toimi kaikilla bibtex-tyylillä, kokeile silloin <code>note</code>-kenttää <code>url</code>:n sijaan.",
+	    "bibtex_intro_text" => "Kopioi koodi alla bibtex-kirjastoosi. Koodi on testattu apacite.sty-tyylillä. Kenttä <code>url</code> ei toimi kaikilla bibtex-tyyleillä, kokeile silloin <code>note</code>-kenttää <code>url</code>:n sijaan.",
 	    "zotero_intro_text" => "Kopioi koodi alla leikepöydälle. Luo Zoterossa 'Report'-tietueen valitsemalla 'Actions > Import from clipboard'. Zoteron 'Report'-tietue on parhaiten yhteensopiva tyyli.",
 	    "show" => "Näytä: ",
 	    "search_scholar" => "Etsi viittauksia aineistoon Google Scholar -palvelusta.",
