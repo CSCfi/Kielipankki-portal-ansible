@@ -64,7 +64,6 @@ function localize($lang,$key) {
     static $l18n = array(
 	"fi" => array(
 	    "data set" => "korpus", /* generic */
-	    "available_at" => "Saatavilla",
 	    "ref_heading" => "Viittausohje",
 	    "ref_intro" => "Viittaa kielivaraan näin:",
 	    "bibtex_intro_text" => "Kopioi koodi alla bibtex-kirjastoosi. Koodi on testattu apacite.sty-tyyillä. Kenttä <code>url</code> ei toimi kaikilla bibtex-tyylillä, kokeile silloin <code>note</code>-kenttää <code>url</code>:n sijaan.",
@@ -79,7 +78,6 @@ function localize($lang,$key) {
 	    "data set" => "data set", /* generic */
 	    "ref_heading" => "Reference instructions",
 	    "ref_intro" => "Please cite the language resource as follows:",
-	    "available_at" => "Retrieved from",
 	    "bibtex_intro_text" => "Copy the code below to your bibtex bibliography file. The code has been tested using the style apacite.sty. The field <code>url</code> does not work in all styles. In case of problems try changing it to <code>note</code> instead.",
 	    "zotero_intro_text" => "Copy the code below to the clipboard. In Zotero, create a 'Report' item by clicking 'Actions > Import from clipboard'. Zotero's 'Report' item is the most compatible style.",
 	    "show" => "Show: ",
@@ -279,7 +277,7 @@ function render_reference($lang,$row) {
     return render_author_date($lang,$row) .
            render_title($lang, $row) . " " .
            render_type($lang, $row) . ". ".get_publisher(). ". " .
-           localize($lang,"available_at")." ".render_urn($lang,$row) ;
+           render_urn($lang,$row) ;
 }
 
 /*
