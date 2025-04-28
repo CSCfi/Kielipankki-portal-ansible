@@ -102,29 +102,29 @@ function localize($lang,$key) {
 /*
    Renders author(s) and date. A missing author will not render a date
  */
-function render_author_date($lang, $row) {
+function render_author_year($lang, $row) {
     $authors=get_authors($lang ,$row);
-    $date=render_date($lang, $row);
-    $author_date="";
+    $year=render_year($lang, $row);
+    $author_year="";
     $author_count=count($authors);
     if ($authors) {
 	/* For one author, just return the rendered author. Otherwise separate with commas and add & for the last entry. */
 	if ($author_count == 1) {
-	    $author_date .= render_author($authors[0]);
+	    $author_year .= render_author($authors[0]);
 	} else {
 	    /* list the authors, put an & in front of the last.*/
 	    for ($i = 0; $i < $author_count-1 ; $i++) {
-		$author_date .= render_author($authors[$i]).", ";
+		$author_year .= render_author($authors[$i]).", ";
 	    }
-	    $author_date .= "&amp; " . render_author($authors[$author_count-1]);
+	    $author_year .= "&amp; " . render_author($authors[$author_count-1]);
 	}
 	/* Add date if known */
-	if ($date) {
-	    $author_date.=$date;
+	if ($year) {
+	    $author_year.=$year;
 	}
-	$author_date .= ". ";
+	$author_year .= ". ";
     }
-    return $author_date;
+    return $author_year;
 }
 
 /* render the author.
@@ -182,23 +182,26 @@ function get_authors($lang, $row) {
    Render the date as (date).
  */
 
-function render_date($lang, $row) {
-    $date=get_date($row, $lang);
-    if ($date) {
-	$date_parts=explode("-", $date);
-	return " (".$date_parts[0].")";
+function render_year($lang, $row) {
+    $year=get_year($lang, $row);
+    if ($year) {
+	return "(".$year.")";
     } else {
 	return "";
     }
 }
 
-function get_date($row, $lang) {
-    $date = $row['language_bank_publication_date'];
+function get_year($lang, $row) {
     $corpus_status = $row['corpus_status'];
     if ($corpus_status == "upcoming") {
       return localize($lang, "forthcoming");
+    }
+    $date = $row['language_bank_publication_date'];
+    if ($date) {
+	$date_parts=explode("-", $date);
+	return "$date_parts[0]";
     } else {
-      return $date;
+	return "";
     }
 }
 
@@ -274,7 +277,7 @@ function get_urn($row) {
  */
 
 function render_reference($lang,$row) {
-    return render_author_date($lang,$row) .
+    return render_author_year($lang,$row) .
            render_title($lang, $row) . " " .
            render_type($lang, $row) . ". ".get_publisher(). ". " .
            render_urn($lang,$row) ;
@@ -289,8 +292,8 @@ function render_bibtex($lang,$row, $key) {
     $bibtex="";
     $author_list = get_authors($lang,$row);
     if ($author_list) $authors = str_replace("  "," ",implode(" and ", $author_list));
-    $year   = get_date($row, $lang);
-    $type   = get_type($lang,$row);
+    $year   = get_year($lang, $row);
+    $type   = get_type($lang, $row);
     $bibtex .= "@misc{".get_shortname($row)."_".$lang.",\n";
     if ($authors) {
 	$authors = str_replace("_"," ",$authors);
@@ -315,8 +318,8 @@ function render_zotero($lang,$row, $key) {
     $bibtex="";
     $author_list = get_authors($lang,$row);
     if ($author_list) $authors = str_replace("  "," ",implode(" and ", $author_list));
-    $year   = get_date($row, $lang);
-    $type   = get_type($lang,$row);
+    $year   = get_year($lang, $row);
+    $type   = get_type($lang, $row);
     $bibtex .= "@techreport{".get_shortname($row)."_".$lang.",\n";
     if ($authors) {
 	$authors = str_replace("_"," ",$authors);
