@@ -113,6 +113,11 @@ $i18n = array(
         'fi' => 'Käyttäjän on tunnistauduttava.'
     ),
     'AFFIL=FIN-CLARIN' => array (
+        'en' => 'The user must be affiliated with a member organization of the <a href="http://urn.fi/urn:nbn:fi:lb-2025042921">FIN-CLARIN</a> consortium.',
+        'sv' => 'The user must be affiliated with a member organization of the <a href="http://urn.fi/urn:nbn:fi:lb-2025042921">FIN-CLARIN</a> consortium.',
+        'fi' => 'Käyttäjän on kuuluttava johonkin <a href="http://urn.fi/urn:nbn:fi:lb-2025042922">FIN-CLARIN-konsortion</a> jäsenorganisaatioon.'
+    ),
+    'AFFIL=FIN-CLARIN' => array (
         'en' => 'The user must be affiliated with a member organization of the <a href="https://www.kielipankki.fi/organization/fin-clarin/fin-clarin-members/">FIN-CLARIN</a> consortium.',
         'sv' => 'The user must be affiliated with a member organization of the <a href="https://www.kielipankki.fi/organization/fin-clarin/fin-clarin-members/">FIN-CLARIN</a> consortium.',
         'fi' => 'Käyttäjän on kuuluttava johonkin <a href="https://www.kielipankki.fi/organization/fin-clarin/fin-clarin-members/">FIN-CLARIN-konsortion</a> jäsenorganisaatioon.'
