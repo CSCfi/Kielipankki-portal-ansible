@@ -9,10 +9,13 @@
     name: firewalld
     state: absent
 
-- name: install iptables-services
+- name: install iptables
   yum:
-    name: iptables-services
+    name: "{{ item }}"
     state: present
+  loop:
+    - iptables-legacy
+    - iptables-services
 
 - name: copy IP4/6 firewall statup scripts (if not already present)
   template:
