@@ -359,7 +359,6 @@ switch ($lic_type) {
         } else {
             update_field('field_569388a5a6fe1', $id_access_default); // ID ACCESS
         }
-
         $usage_default=array('BY');
         $lic_usage = get_field('field_5693b54a4348c');
         if ($lic_usage) {
