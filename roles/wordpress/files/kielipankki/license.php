@@ -112,6 +112,16 @@ $i18n = array(
         'sv' => 'The End-User must be authenticated or identified.',
         'fi' => 'Käyttäjän on tunnistauduttava.'
     ),
+    'AFFIL=FIN-CLARIN' => array (
+        'en' => 'The user must be affiliated with a member organization of the <a href="http://urn.fi/urn:nbn:fi:lb-2025042921">FIN-CLARIN</a> consortium.',
+        'sv' => 'The user must be affiliated with a member organization of the <a href="http://urn.fi/urn:nbn:fi:lb-2025042921">FIN-CLARIN</a> consortium.',
+        'fi' => 'Käyttäjän on kuuluttava johonkin <a href="http://urn.fi/urn:nbn:fi:lb-2025042922">FIN-CLARIN-konsortion</a> jäsenorganisaatioon.'
+    ),
+    'AFFIL=FIN-CLARIN' => array (
+        'en' => 'The user must be affiliated with a member organization of the <a href="https://www.kielipankki.fi/organization/fin-clarin/fin-clarin-members/">FIN-CLARIN</a> consortium.',
+        'sv' => 'The user must be affiliated with a member organization of the <a href="https://www.kielipankki.fi/organization/fin-clarin/fin-clarin-members/">FIN-CLARIN</a> consortium.',
+        'fi' => 'Käyttäjän on kuuluttava johonkin <a href="https://www.kielipankki.fi/organization/fin-clarin/fin-clarin-members/">FIN-CLARIN-konsortion</a> jäsenorganisaatioon.'
+    ),
     'AFFIL=EDU' => array (
         'en' => 'The End-User must be affiliated with a community of researchers through a university or research institution.',
         'sv' => 'The End-User must be affiliated with a community of researchers through a university or research institution.',
@@ -355,14 +365,14 @@ switch ($lic_type) {
         $lic_id_access = get_field('field_569388a5a6fe1');
         if ($lic_id_access) {
             update_field('field_569388a5a6fe1', union_of_values($id_access_default, $lic_id_access)); // ID ACCESS
-
         } else {
             update_field('field_569388a5a6fe1', $id_access_default); // ID ACCESS
         }
+
         $usage_default=array('BY');
         $lic_usage = get_field('field_5693b54a4348c');
         if ($lic_usage) {
-            update_field('field_5693b54a4348c', union_of_values($usage_default, $lic_usage))
+            update_field('field_5693b54a4348c', union_of_values($usage_default, $lic_usage));
         } else {
             update_field('field_5693b54a4348c', $usage_default);
         }
