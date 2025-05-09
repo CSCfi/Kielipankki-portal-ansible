@@ -265,6 +265,10 @@ function get_urn_href($urn,$lang) {
     }
 }
 
+function union_of_values($array1, $array2) {
+    return array_unique(array_merge($array1, $array2));
+}
+
 global $post;
 
 if (has_post_thumbnail()){
@@ -350,15 +354,15 @@ switch ($lic_type) {
         $id_access_default = array('ID');
         $lic_id_access = get_field('field_569388a5a6fe1');
         if ($lic_id_access) {
-            update_field('field_569388a5a6fe1', $id_access_default + $lic_id_access); // ID ACCESS
+            update_field('field_569388a5a6fe1', union_of_values($id_access_default, $lic_id_access)); // ID ACCESS
+
         } else {
             update_field('field_569388a5a6fe1', $id_access_default); // ID ACCESS
         }
-
         $usage_default=array('BY');
         $lic_usage = get_field('field_5693b54a4348c');
         if ($lic_usage) {
-            update_field('field_5693b54a4348c', $usage_default + $lic_usage);
+            update_field('field_5693b54a4348c', union_of_values($usage_default, $lic_usage))
         } else {
             update_field('field_5693b54a4348c', $usage_default);
         }
@@ -367,7 +371,7 @@ switch ($lic_type) {
         $lic_distribution = get_field('field_5693b5854348d');
 
         if ($lic_distribution) {
-            update_field('field_5693b5854348d', $distribution_default + $lic_distribution);
+            update_field('field_5693b5854348d', union_of_values($distribution_default, $lic_distribution));
         } else {
             update_field('field_5693b5854348d', $distribution_default);
         }
@@ -391,7 +395,7 @@ switch ($lic_type) {
 
         $lic_id_access = get_field('field_569388a5a6fe1');
         if ($lic_id_access) {
-            update_field('field_569388a5a6fe1', $id_access_default + $lic_id_access); // ID ACCESS
+            update_field('field_569388a5a6fe1', union_of_values($id_access_default, $lic_id_access)); // ID ACCESS
         } else {
             update_field('field_569388a5a6fe1', $id_access_default); // ID ACCESS
         }
@@ -399,7 +403,7 @@ switch ($lic_type) {
         $lic_usage = get_field('field_5693b54a4348c');
         $usage_default=array('BY');
         if ($lic_usage) {
-            update_field('field_5693b54a4348c', $usage_default + $lic_usage);
+            update_field('field_5693b54a4348c', union_of_values($usage_default, $lic_usage));
         } else {
             update_field('field_5693b54a4348c', $usage_default);
         }
@@ -408,7 +412,7 @@ switch ($lic_type) {
         $lic_distribution = get_field('field_5693b5854348d');
 
         if ($lic_distribution) {
-            update_field('field_5693b5854348d', $distribution_default + $lic_distribution);
+            update_field('field_5693b5854348d', union_of_values($distribution_default, $lic_distribution));
         } else {
             update_field('field_5693b5854348d', $distribution_default);
         }
