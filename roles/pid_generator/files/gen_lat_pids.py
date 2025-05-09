@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 from lxml import etree
 from lxml import objectify
 import datetime

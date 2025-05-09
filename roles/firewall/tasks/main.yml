@@ -8,13 +8,15 @@
   yum:
     name: firewalld
     state: absent
-  when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7
-  
-- name: install iptables-services
+
+- name: install packages required for iptables configuraion
   yum:
-    name: iptables-services
+    name: "{{ item }}"
     state: present
-  when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7
+  loop:
+    - iptables-legacy
+    - iptables-services
+    - initscripts-service
 
 - name: copy IP4/6 firewall statup scripts (if not already present)
   template:
