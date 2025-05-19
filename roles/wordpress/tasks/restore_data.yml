@@ -50,17 +50,22 @@
   loop:
     - "{{ backup_dir }}"
     - "{{ backup_dir }}/{{ dow }}-{{ backup_filename }}.gz"
-  
+
+- name: Create temporary file for uploading the backup file
+  ansible.builtin.tempfile:
+    state: file
+    prefix: backup_
+  register: backup_file
+  tags: update_wp_content
+
 - name: "Copy backup to host: {{ ansible_host }}"
   copy:
     src: "{{ dow }}-{{ backup_filename }}.gz"
-    dest: "{{ backup_dir }}"
-#  register: cp_wp_db
+    dest: "{{ backup_file.path }}"
   tags: update_wp_content
 
 - name: Apply backup
-  command: /usr/local/bin/backup.sh restore "{{ wp_db_install_password }}"
-#  no_log: true
+  command: /usr/local/bin/backup.sh restore "{{ wp_db_install_password }}" --restore-from "{{ backup_file.path }}"
   tags: update_wp_content
 
 - name: Update DB, Reactivate plugins, Flush cache
