@@ -17,7 +17,7 @@
 
 - name: "Create fresh production backup"
   command: /usr/local/bin/backup.sh backup "{{ wp_db_install_password }}"
-  tags: [ 'never', 'get_fresh_backup']
+  tags: ['never', 'get_fresh_backup']
   delegate_to: portal-prod
 
 # workaround for issue with fetch, sudo + big files.
@@ -26,7 +26,7 @@
     path: "{{ item }}"
     mode: "o+rX"
   delegate_to: portal-prod
-  tags: [ 'never', 'get_fresh_backup']
+  tags: ['never', 'get_fresh_backup']
   loop:
     - "{{ backup_dir }}"
     - "{{ backup_dir }}/{{ dow }}-{{ backup_filename }}.gz"
@@ -36,9 +36,9 @@
     src: "{{ backup_dir }}/{{ dow }}-{{ backup_filename }}.gz"
     dest: "./"
     flat: yes
-  tags: [ 'never', 'get_fresh_backup']
+  tags: ['never', 'get_fresh_backup']
   delegate_to: portal-prod
-  become: no #otherwise it takes for ever.
+  become: no  # otherwise it takes for ever.
 
 # revert from above.
 - name: Remove read rights
@@ -46,7 +46,7 @@
     path: "{{ item }}"
     mode: "o-rwx"
   delegate_to: portal-prod
-  tags: [ 'never', 'get_fresh_backup']
+  tags: ['never', 'get_fresh_backup']
   loop:
     - "{{ backup_dir }}"
     - "{{ backup_dir }}/{{ dow }}-{{ backup_filename }}.gz"
