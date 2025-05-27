@@ -116,7 +116,7 @@ function render_author_year($lang, $row) {
 	    for ($i = 0; $i < $author_count-1 ; $i++) {
 		$author_year .= render_author($authors[$i]).", ";
 	    }
-	    $author_year .= "&amp; " . render_author($authors[$author_count-1]);
+	    $author_year .= "&amp; ".render_author($authors[$author_count-1]);
 	}
 	/* Add date if known */
 	if ($year) {
