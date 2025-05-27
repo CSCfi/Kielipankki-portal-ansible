@@ -120,7 +120,7 @@ function render_author_year($lang, $row) {
 	}
 	/* Add date if known */
 	if ($year) {
-	    $author_year.=$year;
+	    $author_year.=" ".$year;
 	}
 	$author_year .= ". ";
     }
