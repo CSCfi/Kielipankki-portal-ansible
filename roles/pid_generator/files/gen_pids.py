@@ -87,7 +87,7 @@ def send_request(handle, url, register):
         data=json_obj,
         cert=(service_crtfile, service_keyfile),
         headers=headers,
-        verify="epic5-storage-surfsara-nl-chain.pem",
+        verify= True,
     )
 
     if register:  # Register
