@@ -29,41 +29,39 @@ from gen_pids_conf import (
 # The mappings are in the file specified in "source_csv_name".
 # The scripts outputs an XML file with URNs for later harvesting and registers the Handles directly via EPIC.
 
+# It uses a small local database to keep track on already registered PIDs to avoid unneccessary Handle requests.
+
+# The script is normally invoked as CGI without parameters and configured using "gen_pids_conf.py".
+# If invoked with the parameter "init" the local PID db is initialized with presently known PIDs, but without requesting Handles. This is only useful from Ansible. Note:
+# - if the local PID DB contains PIDs not yet registered in production (because the PID list was updated right before "init"), this should not be a problem, since PIDs will be registered in production soon after.
+# - having the PID Generator idle on pre-production for a longer period with cause the latest Handle-PIDs to be registered twice, since the database will be out-of-sync. That should normally not be a problem.
+
 #######
 ##
 ## Functions
 
-
-# Do some basic checks to warn about implausible URN numbers
-def plausibleUrnNumber(numberString):
-    try:
-        datetime.datetime.strptime(numberString[0:8], "%Y%m%d")
-        returnValue = numberString.isdigit()
-    except:
-        return False
-    return returnValue
+# BEGIN Functions related to Handle handling
+# We use the same Handles prefix as EUDAT and have agreed with them that our suffixes always start with "lb-"
 
 
-# Do some basic checks for URLs. We don't want to be perfect here, but
-# catch obvious typos
-def plausibleURL(url):
-    return "://" in url
-
-
+# expand urnNumber to a proper Handle
 def expand_handle(urnNumber):
     return EPIC_SERVICE_PREFIX + "/lb-" + urnNumber
 
 
+# Update existing Handle via EPIC
 def update_handle(handle, url):
     send_request(handle, url, False)
     logging.info("UPDATE %s -> %s" % (handle, url))
 
 
+# Register new Handle via EPIC
 def register_handle(handle, url):
     send_request(handle, url, True)
     logging.info("REGISTER %s -> %s" % (handle, url))
 
 
+# common code for update/register via EPIC
 def send_request(handle, url, register):
     service_url = EPIC_SERVICE_URL
     service_user = EPIC_SERVICE_PREFIX
@@ -91,7 +89,7 @@ def send_request(handle, url, register):
         verify="epic5-storage-surfsara-nl-chain.pem",
     )
 
-    if register:
+    if register:  # Register
         if r.status_code == 201:
             logging.info("REGISTER OK %s -> %s" % (handle, url))
         else:
@@ -102,7 +100,7 @@ def send_request(handle, url, register):
                 raise requests.exceptions.HTTPError(
                     "Unexpected registration error. (%s)" % r.status_code
                 )
-    else:
+    else:  # Update
         if r.status_code == 200:
             logging.info("UPDATE OK %s -> %s" % (handle, url))
         else:
@@ -115,6 +113,7 @@ def send_request(handle, url, register):
                 )
 
 
+# construct payload for update/register
 def create_url_json(url):
     return json.dumps(
         {
@@ -137,37 +136,8 @@ def create_url_json(url):
     )
 
 
-# construct XML describing one URN->URL mapping.
-def recordAsXML(urnNumber, url, dateStamp):
-    E = objectify.E
-    record = E.record(
-        E.header(
-            E.dateStamp(dateStamp, type="modified"),
-            E.identifier("urn:nbn:fi:lb-" + urnNumber),
-            E.destinations(E.destination(E.dateStamp(type="activated"), E.url(url))),
-        )
-    )
-    objectify.deannotate(record, xsi_nil=True)
-    etree.cleanup_namespaces(record)
-    # pretty print string to keep XML somewhat human readable
-    return etree.tostring(record, pretty_print=True, encoding="unicode")
-
-
-def getPidData(line):
-    row = line.split()
-
-    if not (len(row) == 2):
-        raise Exception("Illegal line: " + str(row))
-    elif not plausibleUrnNumber(row[0]):
-        raise Exception("Implausible URN Number: " + row[0])
-    elif not plausibleURL(row[1]):
-        raise Exception("Implausible URL: " + row[1])
-
-    urnNumber = row[0]
-    url = row[1]
-    return (urnNumber, url)
-
-
+# register/update Handle if needed. Do nothing in case of no change.
+# keep track of new/changed PIDs in local DB
 def setHandle(urnNumber, url, db_con, db_cur):
 
     db_cur.execute("SELECT pid,url from pid_map WHERE pid = %s", (urnNumber,))
@@ -189,6 +159,29 @@ def setHandle(urnNumber, url, db_con, db_cur):
             db_con.commit()
 
 
+# END Functions related to Handle handling
+
+# BEGIN Functions related to URN handling
+# URNs are all written into a XML file which is read by the national library, currently once per day at 10pm.
+# The XML files has a header, all PIDs as records and a footer.
+
+
+# construct XML describing one URN->URL mapping.
+def recordAsXML(urnNumber, url, dateStamp):
+    E = objectify.E
+    record = E.record(
+        E.header(
+            E.dateStamp(dateStamp, type="modified"),
+            E.identifier("urn:nbn:fi:lb-" + urnNumber),
+            E.destinations(E.destination(E.dateStamp(type="activated"), E.url(url))),
+        )
+    )
+    objectify.deannotate(record, xsi_nil=True)
+    etree.cleanup_namespaces(record)
+    # pretty print string to keep XML somewhat human readable
+    return etree.tostring(record, pretty_print=True, encoding="unicode")
+
+
 def xmlPrintHeader(outFile):
     outFile.write('<?xml version="1.0" encoding="ASCII"?>')
     outFile.write(
@@ -203,6 +196,47 @@ def xmlPrintFooter(outFile):
     outFile.write("</records>")
 
 
+# END Functions related to URN handling
+
+# BEGIN General functions
+
+
+# Do some basic checks to warn about implausible URN numbers
+def plausibleUrnNumber(numberString):
+    try:
+        # check that first eight digits are a reverse date, return false otherwise
+        datetime.datetime.strptime(numberString[0:8], "%Y%m%d")
+        # check that the whole string contains only numbers.
+        returnValue = numberString.isdigit()
+    except:
+        return False
+    return returnValue
+
+
+# Do some basic checks for URLs. We don't want to be perfect here, but
+# catch obvious typos, like http:/xxx
+def plausibleURL(url):
+    return "://" in url
+
+
+# parse line from source file and do basic checks
+def getPidData(line):
+    row = line.split()
+
+    if not (len(row) == 2):
+        raise Exception("Illegal line: " + str(row))
+    elif not plausibleUrnNumber(row[0]):
+        raise Exception("Implausible URN Number: " + row[0])
+    elif not plausibleURL(row[1]):
+        raise Exception("Implausible URL: " + row[1])
+
+    urnNumber = row[0]
+    url = row[1]
+    return (urnNumber, url)
+
+
+# open local DB which keeps track on already registered pids
+# Otherwise each run would generate thousands of Handle register requests.
 def openLocalPidDB():
     pid_db_name = PID_DB_NAME
     pid_db_user = PID_DB_USER
@@ -212,6 +246,9 @@ def openLocalPidDB():
     )
     cur = con.cursor()
     return (con, cur)
+
+
+# END General functions
 
 
 #### MAIN
@@ -224,18 +261,23 @@ dateStamp = datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
 source_csv_url = SOURCE_CSV_URL
 urn_path = URN_PATH
 # The file containing the unmodified PID file (copied from Github)
+# useful for quickly reverse matching PIDs.
 raw_filename = RAW_FILENAME
-auth_token = AUTH_TOKEN
-
-# the URN xml for harvesting
-urn_target_xml_name = urn_path + "/urn_nbn_fi_lb.xml"
 raw_target_name = urn_path + "/" + raw_filename
 
+# The auth token to access the source file in Github
+auth_token = AUTH_TOKEN
+
+# the location of the URN xml for harvesting by NLF's URN service
+urn_target_xml_name = urn_path + "/urn_nbn_fi_lb.xml"
+
+# Debug settings
 # put "True" here to get more verbosity
 DEBUG = False
 # DEBUG=True
 
 
+# a simple log of the last run.
 logging.basicConfig(
     filename="/tmp/gen_pids_lastlog.txt", level=logging.INFO, filemode="w"
 )
@@ -252,6 +294,7 @@ try:
         raw_target_name, "w"
     ) as rawFile:
         xmlPrintHeader(outFile)
+        # connect to Github
         r = requests.get(source_csv_url, auth=(auth_token, ""))
 
         for line in r.iter_lines():
@@ -276,7 +319,7 @@ try:
 
 except Exception as e:
     if DEBUG:
-        logging.exception("Exception found. Script haltet.")
+        logging.exception("Exception found. Script halted.")
         raise  # re-raise the exception
     # traceback gets printed
 
@@ -285,6 +328,7 @@ except Exception as e:
         logging.error("Script halted. Fix the error and try again.")
 
 finally:
+    # Show debug output in browser and mail to hardcoded email
     print("Content-type: text/html\n\n")
     print("<pre>")
     with open("/tmp/gen_pids_lastlog.txt", "r") as log:
