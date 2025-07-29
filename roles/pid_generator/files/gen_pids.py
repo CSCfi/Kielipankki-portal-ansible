@@ -9,6 +9,7 @@ import os
 import requests
 import json
 import logging
+import re
 
 from gen_pids_conf import (
     EPIC_SERVICE_URL,
@@ -216,7 +217,8 @@ def plausibleUrnNumber(numberString):
 # Do some basic checks for URLs. We don't want to be perfect here, but
 # catch obvious typos, like http:/xxx
 def plausibleURL(url):
-    return "://" in url
+    pattern = r'://(?!/)' # to exactly match '://'
+    return url.match(pattern)
 
 
 # parse line from source file and do basic checks
