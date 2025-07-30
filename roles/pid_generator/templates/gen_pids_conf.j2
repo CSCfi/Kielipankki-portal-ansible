@@ -1,4 +1,3 @@
-# enable handle updates manually!
 EPIC_SERVICE_URL      = "{{ pid_epic_service_url }}" 
 EPIC_SERVICE_PREFIX   = "11113" # The present Handle prefix for Kielipankki
 
@@ -12,6 +11,9 @@ PID_DB_PASSWORD = "{{ db_password }}"
 
 URN_PATH= "{{ pid_gen_xml_dir }}"
 RAW_FILENAME="lb_pid.txt"
+URN_XML_FILENAME="urn_nbn_fi_lb.xml"
 
 SOURCE_CSV_URL= "https://raw.githubusercontent.com/CSCfi/Kielipankki/master/FIN-CLARIN-Administration/lb_pid.txt"
 AUTH_TOKEN="{{ pid_github_auth_token }}"
+
+DEBUG_EMAIL_ADDRESS="matthies@csc.fi"
