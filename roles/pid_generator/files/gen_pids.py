@@ -270,8 +270,11 @@ raw_target_name = urn_path + "/" + raw_filename
 # The auth token to access the source file in Github
 auth_token = AUTH_TOKEN
 
-# the location of the URN xml for harvesting by NLF's URN service
-urn_target_xml_name = urn_path + "/urn_nbn_fi_lb.xml"
+# name and location of the URN xml for harvesting by NLF's URN service
+urn_xml_filename = URN_XML_FILENAME
+urn_target_xml_name = urn_path + "/" + urn_xml_filename
+
+debug_email_address = DEBUG_EMAIL_ADDRESS
 
 # Debug settings
 # put "True" here to get more verbosity
@@ -336,8 +339,9 @@ finally:
     with open("/tmp/gen_pids_lastlog.txt", "r") as log:
         print(log.read())
     print("</pre>")
-    os.system(
-        'cat /tmp/gen_pids_lastlog.txt | mailx -r kielipankki@csc.fi -s "PID Generator output" matthies@csc.fi'
-    )
+    if debug_email_address:
+        os.system(
+            'cat /tmp/gen_pids_lastlog.txt | mailx -r kielipankki@csc.fi -s "PID Generator output" ' + debug_email_address
+        )
     if db_con:
         db_con.close()
