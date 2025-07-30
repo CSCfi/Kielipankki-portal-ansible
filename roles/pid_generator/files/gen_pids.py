@@ -21,8 +21,10 @@ from gen_pids_conf import (
     PID_DB_PASSWORD,
     URN_PATH,
     RAW_FILENAME,
+    URN_XML_FILENAME,
     SOURCE_CSV_URL,
     AUTH_TOKEN,
+    DEBUG_EMAIL_ADDRESS
 )
 
 
@@ -218,7 +220,7 @@ def plausibleUrnNumber(numberString):
 # catch obvious typos, like http:/xxx
 def plausibleURL(url):
     pattern = r'://(?!/)' # to exactly match '://'
-    return url.match(pattern)
+    return re.search (pattern, url)
 
 
 # parse line from source file and do basic checks
