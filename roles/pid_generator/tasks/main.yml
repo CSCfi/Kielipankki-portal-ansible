@@ -54,10 +54,8 @@
     group: apache
   with_items:
     - gen_pids.py
-    - gen_lat_pids.py
-    - epic5-storage-surfsara-nl-chain.pem
 #    - check_pids.py
-  tags: script-update
+  tags: pid-script-update
 
 - name: Copy certificates
   copy:
@@ -80,8 +78,7 @@
     mode: 0750
   with_items:
     - gen_pids_conf
-    - gen_lat_pids_conf
-  tags: script-update
+  tags: pid-script-update
 
 - name: init script
   shell: "{{ pid_gen_home_dir }}/gen_pids.py init"
