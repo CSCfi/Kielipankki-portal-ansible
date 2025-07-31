@@ -266,8 +266,7 @@ source_csv_url = SOURCE_CSV_URL
 urn_path = URN_PATH
 # The file containing the unmodified PID file (copied from Github)
 # useful for quickly reverse matching PIDs.
-raw_filename = RAW_FILENAME
-raw_target_name = urn_path + "/" + raw_filename
+raw_target_name = urn_path + "/" + RAW_FILENAME
 
 # The auth token to access the source file in Github
 auth_token = AUTH_TOKEN
