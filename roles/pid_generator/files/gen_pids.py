@@ -272,8 +272,7 @@ raw_target_name = urn_path + "/" + RAW_FILENAME
 auth_token = AUTH_TOKEN
 
 # name and location of the URN xml for harvesting by NLF's URN service
-urn_xml_filename = URN_XML_FILENAME
-urn_target_xml_name = urn_path + "/" + urn_xml_filename
+urn_target_xml_name = urn_path + "/" + URN_XML_FILENAME
 
 debug_email_address = DEBUG_EMAIL_ADDRESS
 
