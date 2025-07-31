@@ -37,7 +37,7 @@ from gen_pids_conf import (
 # The script is normally invoked as CGI without parameters and configured using "gen_pids_conf.py".
 # If invoked with the parameter "init" the local PID db is initialized with presently known PIDs, but without requesting Handles. This is only useful from Ansible. Note:
 # - if the local PID DB contains PIDs not yet registered in production (because the PID list was updated right before "init"), this should not be a problem, since PIDs will be registered in production soon after.
-# - having the PID Generator idle on pre-production for a longer period with cause the latest Handle-PIDs to be registered twice, since the database will be out-of-sync. That should normally not be a problem.
+# - having the PID Generator idle on pre-production for a longer period will cause the latest Handle-PIDs to be registered twice, since the database will be out-of-sync. That should normally not be a problem.
 
 #######
 ##
