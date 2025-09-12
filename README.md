@@ -133,9 +133,8 @@ This assumes that the pre-production server is otherwise ready.
   -``sudo -u apache /usr/local/bin/wp config set WP_DEBUG false --raw --path=/var/www/html``
   - ``sudo -u apache /usr/local/bin/wp super-cache flush --path=/var/www/html``
  - Make sure the menu background is now black.
- - update IP settings in [Kielipankki-proxy](https://github.com/CSCfi/Kielipankki-proxy) (see README.md there)
+ - Assign the floating IP belonging to the production portal to the pre-production portal either in the cPouta web console or using the openstack command-line tools.
  - The new portal instance is immediately in use and now considered production.
- - Important: RENAME the now production server manually in the cPouta dashboard from portal-pre-prod to portal-prod (or portal-prod2, if "portal-prod" is already in use. This prevents future ansible runs from changing the now renamed "portal-pre-prod".
- - Remember to update the inventory settings in this repository to reflect the new IPs.
+ - Shut down the old production portal to prevent accidental activation of it.
  - Also remember to update Opsview.
  - Recommended: Test the PID generator via https://www.kielipankki.fi/pid/script/gen_pids.py
