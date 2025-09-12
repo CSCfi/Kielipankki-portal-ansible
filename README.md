@@ -134,6 +134,7 @@ This assumes that the pre-production server is otherwise ready.
   - ``sudo -u apache /usr/local/bin/wp super-cache flush --path=/var/www/html``
  - Make sure the menu background is now black.
  - Assign the floating IP belonging to the production portal to the pre-production portal either in the cPouta web console or using the openstack command-line tools.
+ - (Manually) rename the old portal-prod to portal-old, and the pre-prod portal to portal-prod.
  - The new portal instance is immediately in use and now considered production.
  - Shut down the old production portal to prevent accidental activation of it.
  - Also remember to update Opsview.
