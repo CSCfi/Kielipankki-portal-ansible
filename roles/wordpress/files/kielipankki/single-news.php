@@ -111,6 +111,7 @@ wp_nav_menu( $men );
 if ( have_posts() ) {
 	while ( have_posts() ) {
 		the_post();
+		the_time('j.n.Y');
 		the_content();
 	} // end while
 } // end if
