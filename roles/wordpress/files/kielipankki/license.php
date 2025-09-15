@@ -96,8 +96,8 @@ $i18n = array(
     ),
 
     'HEADING_ADDITIONAL_TERMS' => array (
-        'en' => 'Additional license terms as defined in the Terms of Service Agreement',
-        'sv' => 'Additional license terms as defined in the Terms of Service Agreement',
+        'en' => 'Additional license terms as defined in the Terms of Use Agreement',
+        'sv' => 'Additional license terms as defined in the Terms of Use Agreement',
         'fi' => 'Palveluehtojen mukaiset lisenssiehdot'
     ),
 
@@ -349,8 +349,6 @@ foreach($pages as $page){
 }
  */
 
-$additional_cond_text="-/-";
-
 echo '<header>';
 
 switch ($lic_type) {
@@ -462,40 +460,28 @@ echo '<p><b>' . $i18n['COPYRIGHT_HOLDER'][$lang] . '</b>: ' . get_field('lic_cop
 
 echo $preamble;
 
-echo '<h2>'.$i18n['HEADING_ADDITIONAL_TERMS'][$lang].':</h2>';
+$additional_terms_content = "";
 
 $field = get_field_object('lic_id_access');
 $values = $field['value'];
-
-
 if ($values) {
-    echo '<h3>'.$i18n['HEADING_ID_ACCESS'][$lang].'</h3>';
-    $additional_cond_text = "";
-    echo '<ul>';
-
+    $additional_terms_content .= '<h3>' . $i18n['HEADING_ID_ACCESS'][$lang] . "</h3>\n<ul>\n";
     foreach($values as $v) {
-        echo '<li><b>'.$v.'</b>: '.$i18n[$v][$lang] . '</li>';
+        $additional_terms_content .= '<li><b>' . $v . '</b>: ' . $i18n[$v][$lang] . "</li>\n";
     }
-
-    echo '</ul>';
+    $additional_terms_content .= "</ul>\n";
 }
-
 
 $field = get_field_object('lic_usage');
 $values = $field['value'];
 $choices = $field['choices'];
-
-
 if ($values) {
-    echo '<h3>' . $i18n['HEADING_USAGE'][$lang] . '</h3>';
-    $additional_cond_text = "";
-    echo '<ul>';
-
+    $additional_terms_content .= '<h3>' . $i18n['HEADING_USAGE'][$lang] . "</h3>\n<ul>\n";
     foreach($values as $v) {
-        echo '<li><b>'.$v.'</b>: '.$i18n[$v][$lang] . '</li>';
+        $additional_terms_content .= '<li><b>' . $v . '</b>: ' . $i18n[$v][$lang] . "</li>\n";
     }
 
-    echo '</ul>';
+    $additional_terms_content .= "</ul>\n";
 }
 
 
@@ -514,29 +500,26 @@ $dist_conditions_list="";
 if ($values) {
     foreach($values as $v) {
         if ($v != 'OTHER') {
-            $dist_conditions_list= $dist_conditions_list . '<li><b>'.$v.'</b>: '.$i18n[$v][$lang] . '</li>';
+            $dist_conditions_list = $dist_conditions_list . '<li><b>'.$v.'</b>: '.$i18n[$v][$lang] . "</li>\n";
         }
     }
 }
 
 if ($dist_conditions_list) {
-    $additional_cond_text = "";
-    echo '<h3>'.$i18n['HEADING_DISTRIBUTION'][$lang].'</h3>';
-    echo '<ul>';
-    echo $dist_conditions_list;
-    echo '</ul>';
+    $additional_terms_content .= '<h3>' . $i18n['HEADING_DISTRIBUTION'][$lang] . "</h3>\n";
+    $additional_terms_content .= '<ul>' . $dist_conditions_list . "</ul>\n";
 }
 
 if (in_array('OTHER', $values)) {
-    $additional_cond_text = "";
-    echo '<h3>'.$i18n['HEADING_OTHER'][$lang].'</h3>';
-    echo '<ul>';
-    echo  '<li><b>OTHER</b>: '.$i18n['OTHER'][$lang] . '</li>';
-    echo '<p><i>' . get_field('lic_'.$lang.'_other') . '</i></p>';
-    echo '</ul>';
-
+    $additional_terms_content .= '<h3>' . $i18n['HEADING_OTHER'][$lang] . "</h3>\n";
+    $additional_terms_content .= '<ul>\n<li><b>OTHER</b>: ' . $i18n['OTHER'][$lang] . "</li>\n";
+    $additional_terms_content .= '<p><i>' . get_field('lic_'.$lang.'_other') . "</i></p></ul>\n";
 }
-echo '<p>'.$additional_cond_text.'</p>';
+
+if (strlen($additional_terms_content) != 0) {
+   echo '<h2>' . $i18n['HEADING_ADDITIONAL_TERMS'][$lang] . ":</h2>\n";
+   echo $additional_terms_content;
+}
 
 
 echo '<p>'.$i18n['ENDING'][$lang].'</p>';
