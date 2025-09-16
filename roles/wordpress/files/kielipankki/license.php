@@ -512,7 +512,7 @@ if ($dist_conditions_list) {
 
 if (in_array('OTHER', $values)) {
     $additional_terms_content .= '<h3>' . $i18n['HEADING_OTHER'][$lang] . "</h3>\n";
-    $additional_terms_content .= '<ul>\n<li><b>OTHER</b>: ' . $i18n['OTHER'][$lang] . "</li>\n";
+    $additional_terms_content .= '<ul><li><b>OTHER</b>: ' . $i18n['OTHER'][$lang] . "</li>\n";
     $additional_terms_content .= '<p><i>' . get_field('lic_'.$lang.'_other') . "</i></p></ul>\n";
 }
 
