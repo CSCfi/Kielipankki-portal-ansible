@@ -129,13 +129,16 @@ This assumes that the pre-production server is otherwise ready.
 
 ## Switch to the new version
 
- - On pre-production run as root:
-  -``sudo -u apache /usr/local/bin/wp config set WP_DEBUG false --raw --path=/var/www/html``
-  - ``sudo -u apache /usr/local/bin/wp super-cache flush --path=/var/www/html``
+ - On pre-production run:
+   - ``sudo -u apache /usr/local/bin/wp config set WP_DEBUG false --raw --path=/var/www/html``
+   - ``sudo -u apache /usr/local/bin/wp super-cache flush --path=/var/www/html``
+   - `sudo hostnamectl set-hostname portal-PROD`
  - Make sure the menu background is now black.
+ - On old production run:
+   - `sudo hostnamectl set-hostname portal-old`
  - update IP settings in [Kielipankki-proxy](https://github.com/CSCfi/Kielipankki-proxy) (see README.md there)
  - Assign the floating IP belonging to the production portal to the pre-production portal either in the cPouta web console or using the openstack command-line tools.
- - (Manually) rename the old portal-prod to portal-old, and the pre-prod portal to portal-prod.
+ - Rename the old portal-prod to portal-old, and the pre-prod portal to portal-prod in pouta.csc.fi web interface.
  - The new portal instance is immediately in use and now considered production.
  - Shut down the old production portal to prevent accidental activation of it.
  - Recommended: Test the PID generator via https://www.kielipankki.fi/pid/script/gen_pids.py
