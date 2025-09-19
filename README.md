@@ -133,6 +133,7 @@ This assumes that the pre-production server is otherwise ready.
    - ``sudo -u apache /usr/local/bin/wp config set WP_DEBUG false --raw --path=/var/www/html``
    - ``sudo -u apache /usr/local/bin/wp super-cache flush --path=/var/www/html``
    - `sudo hostnamectl set-hostname portal-PROD`
+   - `sudo systemctl restart opsview-agent`
  - Make sure the menu background is now black.
  - On old production run:
    - `sudo hostnamectl set-hostname portal-old`
