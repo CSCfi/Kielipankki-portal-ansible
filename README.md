@@ -143,3 +143,4 @@ This assumes that the pre-production server is otherwise ready.
  - The new portal instance is immediately in use and now considered production.
  - Shut down the old production portal to prevent accidental activation of it.
  - Recommended: Test the PID generator via https://www.kielipankki.fi/pid/script/gen_pids.py
+ - Make sure that backup user at Korp has current host keys in `.ssh/known_hosts`
