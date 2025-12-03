@@ -195,6 +195,9 @@ function custom_theme_setup() {
 
 function wpb_list_child_pages() {
 global $post;
+if (!is_page()) { // for safety, if this is called in a non-page
+        return '';
+    }
 $childpages = wp_list_pages( 'sort_column=post_title&title_li=&child_of=' . $post->ID . '&echo=0' );
 return '<ul>' . $childpages . '</ul>';
 }
