@@ -131,6 +131,7 @@ function render_author_year($lang, $row) {
    Firstname Lastname => Lastname, F.
    Firstname {van_der_Lastname} => van der Lastname, F.
    {Firstname Lastname} => Firstname Lastname  (for institutions)
+   Jean-Pierre Lastname => Lastname, J.-P.
  */
 
 function render_author($author) {
@@ -148,9 +149,20 @@ function render_author($author) {
 	$result = $name_parts[$part_count-1];
 	if ($part_count > 1) {
 	    $result .= ",";
-	    /* iterate through firstnames and add inital*/
+	    /* iterate through firstnames and add initial*/
 	    for ($I = 0; $I < $part_count-1 ; $I++) {
-		$result .= " ".mb_substr($name_parts[$I], 0, 1,'UTF8').".";
+		/* Handle hyphenated names like Jean-Pierre */
+		if (strpos($name_parts[$I], '-') !== false) {
+		    $hyphenated_parts = explode("-", $name_parts[$I]);
+		    $abbreviated = "";
+		    foreach ($hyphenated_parts as $part) {
+			$abbreviated .= mb_substr($part, 0, 1, 'UTF8') . ".-";
+		    }
+		    /* Remove trailing dash and add the period */
+		    $result .= " " . rtrim($abbreviated, '-');
+		} else {
+		    $result .= " ".mb_substr($name_parts[$I], 0, 1,'UTF8').".";
+		}
 	    }
 	}
     }
