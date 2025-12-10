@@ -19,5 +19,5 @@ The PIDs are maintained in GitHub (for the path see
 `templates/gen_pids_conf.j2`). `gen_pids.py` makes the raw PID file
 available at the path `/pid/lb_pid.txt`.
 
-For end user documentation see [FIN-CLARIN-Administration in GitHub](/CSCfi/Kielipankki/master/FIN-CLARIN-Administration)
+For end user documentation see [FIN-CLARIN-Administration in GitHub](https://github.com/CSCfi/Kielipankki/tree/master/FIN-CLARIN-Administration)
 
