@@ -112,7 +112,7 @@ wordpress_plugins:
 - { name: cms-tree-page-view , param: '' } # Page management
 - { name: duplicate-post , param: '' } # Copy page as base for new page
 - { name: formidable , param: '' } # Newsletter subscription
-- { name: post-tags-and-categories-for-pages , param: '' } # 
+- { name: post-tags-and-categories-for-pages , param: '' } #
 - { name: media-library-plus , param: '' } # better organization of uploads
 - { name: redirection , param: '' } # for easy redirects
 - { name: relevanssi , param: '' } # Improve search
@@ -134,4 +134,3 @@ wordpress_plugins:
 
 # plugin extension
 tablepress_extension: True
-
