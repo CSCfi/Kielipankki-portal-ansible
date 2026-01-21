@@ -4,6 +4,8 @@ vm_name_postfix: 'pre-prod'
 pouta_instance_name: "{{ instance_name }}-{{ vm_name_postfix }}"
 network: "project_2000680"
 
+postfix_hostname: kielipankki-proxy.csc.fi
+
 std_image: "AlmaLinux-9"
 project_key: "kielipouta"
 project_sg: "portal-sg"
