@@ -29,8 +29,8 @@
   become_user: "{{ remote_deploy_user }}"
   tags: update_kielipankki_theme
 
-- name: Remove unused twenty* themes
-  command: /usr/local/bin/wp theme delete twentyfifteen twentysixteen twentyseventeen twentynineteen twentytwenty twentytwentyone twentytwentytwo twentytwentythree
+- name: Remove unused themes
+  command: /usr/local/bin/wp theme delete --all
   args:
     chdir: "{{ wordpress_directory }}"
   become_user: "{{ remote_deploy_user }}"
