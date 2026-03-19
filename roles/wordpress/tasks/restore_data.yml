@@ -55,7 +55,10 @@
   tags:
     - never
     - get_fresh_backup
+<<<<<<< KP-11224_server_sig
 
+=======
+>>>>>>> main
   loop:
     - "{{ backup_dir }}"
     - "{{ backup_dir }}/{{ dow }}-{{ backup_filename }}.gz"
