@@ -55,7 +55,6 @@
   tags:
     - never
     - get_fresh_backup
-
   loop:
     - "{{ backup_dir }}"
     - "{{ backup_dir }}/{{ dow }}-{{ backup_filename }}.gz"
