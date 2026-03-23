@@ -271,7 +271,7 @@ function render_urn($lang, $row) {
     $urn=get_urn($row);
     $available="";
     if ($urn) {
-	$available = "http://urn.fi/".$urn;
+	$available = "https://urn.fi/".$urn;
     }
     return $available;
 }
