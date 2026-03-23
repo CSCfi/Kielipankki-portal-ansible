@@ -113,9 +113,9 @@ $i18n = array(
         'fi' => 'Käyttäjän on tunnistauduttava.'
     ),
     'AFFIL=FIN-CLARIN' => array (
-        'en' => 'The user must be affiliated with a member organization of the <a href="http://urn.fi/urn:nbn:fi:lb-2025042921">FIN-CLARIN</a> consortium.',
-        'sv' => 'The user must be affiliated with a member organization of the <a href="http://urn.fi/urn:nbn:fi:lb-2025042921">FIN-CLARIN</a> consortium.',
-        'fi' => 'Käyttäjän on kuuluttava johonkin <a href="http://urn.fi/urn:nbn:fi:lb-2025042922">FIN-CLARIN-konsortion</a> jäsenorganisaatioon.'
+        'en' => 'The user must be affiliated with a member organization of the <a href="https://urn.fi/urn:nbn:fi:lb-2025042921">FIN-CLARIN</a> consortium.',
+        'sv' => 'The user must be affiliated with a member organization of the <a href="https://urn.fi/urn:nbn:fi:lb-2025042921">FIN-CLARIN</a> consortium.',
+        'fi' => 'Käyttäjän on kuuluttava johonkin <a href="https://urn.fi/urn:nbn:fi:lb-2025042922">FIN-CLARIN-konsortion</a> jäsenorganisaatioon.'
     ),
     'AFFIL=FIN-CLARIN' => array (
         'en' => 'The user must be affiliated with a member organization of the <a href="https://www.kielipankki.fi/organization/fin-clarin/fin-clarin-members/">FIN-CLARIN</a> consortium.',
@@ -269,7 +269,7 @@ function lic_laundry_tag_list($filter_out) {
 function get_urn_href($urn,$lang) {
     global $i18n;
     if ($urn) {
-        return '<a href="http://urn.fi/'.$urn.'">'.$urn.'</a>';
+        return '<a href="https://urn.fi/'.$urn.'">'.$urn.'</a>';
     } else {
         return '<b>'.$i18n['UNKNOWN_ERROR'][$lang].'</b>';
     }
