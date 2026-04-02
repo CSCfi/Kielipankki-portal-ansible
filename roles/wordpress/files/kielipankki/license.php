@@ -163,9 +163,9 @@ $i18n = array(
         'fi' => 'Mikäli Aineistosta syntyy julkaisu, Käyttäjän on ilmoitettava siitä Aineiston Oikeudenhaltijalle.'
     ),
     'LOC' => array (
-        'en' => 'The Resource may only be used in a specific location, centre or service.',
-        'sv' => 'The Resource may only be used in a specific location, centre or service.',
-        'fi' => 'Aineiston käyttö on sallittu ainoastaan tietyssä sijaintipaikassa, keskuksessa tai palvelussa. '
+        'en' => 'The Resource may only be used in a specific location, centre or service. For details see other terms of use below.',
+        'sv' => 'The Resource may only be used in a specific location, centre or service. For details see other terms of use below.',
+        'fi' => 'Aineiston käyttö on sallittu ainoastaan tietyssä sijaintipaikassa, keskuksessa tai palvelussa. Katso kohta muut käyttöehdot alla.'
     ),
     'LRT' => array (
         'en' => 'The Resource may only be used for language research and technology development.',
