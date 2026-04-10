@@ -165,7 +165,7 @@ $i18n = array(
     'LOC' => array (
         'en' => 'The Resource may only be used in a specific location, centre or service. For details, see Other terms of use.',
         'sv' => 'The Resource may only be used in a specific location, centre or service. For details see other terms of use below.',
-        'fi' => 'Aineiston käyttö on sallittu ainoastaan tietyssä sijaintipaikassa, keskuksessa tai palvelussa. Katso kohta muut käyttöehdot alla.'
+        'fi' => 'Aineiston käyttö on sallittu ainoastaan tietyssä sijaintipaikassa, keskuksessa tai palvelussa. Katso Muut käyttöehdot.'
     ),
     'LRT' => array (
         'en' => 'The Resource may only be used for language research and technology development.',
