@@ -136,3 +136,7 @@ wordpress_plugins:
 
 # plugin extension
 tablepress_extension: True
+
+koivu_project_number: 2000680
+koivu_use_case: "portal-provisioning"
+koivu_retention_months: 6
