@@ -139,4 +139,8 @@ tablepress_extension: True
 
 koivu_project_number: 2000680
 koivu_use_case: "portal-provisioning"
-koivu_retention_months: 6
+# Logs are deleted from Koivu in one-month chunks: e.g. one month retention
+# time will mean that logs sent on Jan 1st will be deleted at the beginning of
+# March. Thus this keeps us within the 15 months retention time we specify for
+# access logs in our ROPA
+koivu_retention_months: 14
