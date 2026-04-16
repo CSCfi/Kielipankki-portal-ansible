@@ -12,5 +12,5 @@ all:
       ansible_host: 128.214.253.151
       ansible_user: almalinux
   vars:
-    koivu_retention_months: 1
+    koivu_ansible_retention_months: 1
     protected_host: false
