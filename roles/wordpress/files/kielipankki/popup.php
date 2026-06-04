@@ -76,7 +76,7 @@ function localize($lang,$key) {
 	),
 	"en" => array(
 	    "data set" => "data set", /* generic */
-	    "ref_heading" => "Reference instructions",
+	    "ref_heading" => "Citation instructions",
 	    "ref_intro" => "Please cite the language resource as follows:",
 	    "bibtex_intro_text" => "Copy the code below to your bibtex bibliography file. The code has been tested using the style apacite.sty. The field <code>url</code> does not work in all styles. In case of problems try changing it to <code>note</code> instead.",
 	    "zotero_intro_text" => "Copy the code below to the clipboard. In Zotero, create a 'Report' item by clicking 'Actions > Import from clipboard'. Zotero's 'Report' item is the most compatible style.",
