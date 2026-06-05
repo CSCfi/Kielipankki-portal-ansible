@@ -138,9 +138,9 @@ $i18n = array(
         'fi' => 'Aineiston käyttämisestä peritään maksu.'
     ),
     'PLAN' => array (
-        'en' => 'The End-User must present a research plan before the license can be granted. The End-User may only use the Resource for the purpose described in the research plan.',
-        'sv' => 'The End-User must present a research plan before the license can be granted. The End-User may only use the Resource for the purpose described in the research plan.',
-        'fi' => 'Käyttäjän on esitettävä tutkimussuunnitelma ennen lisenssin myöntämistä. Käyttäjä saa käyttää Aineistoa vain tutkimussuunnitelman mukaiseen tarkoitukseen.'
+        'en' => 'The End-User must present a research plan before the license can be granted. The research plan must clearly indicate why access to this Resource is required. The End-User may only use the Resource for the purpose described in the research plan.',
+        'sv' => 'The End-User must present a research plan before the license can be granted. The research plan must clearly indicate why access to this Resource is required. The End-User may only use the Resource for the purpose described in the research plan.',
+        'fi' => 'Käyttäjän on esitettävä tutkimussuunnitelma ennen lisenssin myöntämistä. Tutkimussuunnitelmasta täytyy käydä selvästi ilmi, miksi pääsy tähän Aineistoon on tarpeellinen. Käyttäjä saa käyttää Aineistoa vain tutkimussuunnitelman mukaiseen tarkoitukseen.'
     ),
     'HEADING_USAGE' => array (
         'en' => 'General conditions of use',
@@ -339,7 +339,7 @@ wp_nav_menu( $men );
 
 
 
-$lic_version='v2.1';
+$lic_version='v2.2';
 
 $lic_type = get_field('lic_type');
 
