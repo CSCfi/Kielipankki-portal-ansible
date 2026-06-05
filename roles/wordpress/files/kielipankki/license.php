@@ -243,7 +243,7 @@ $i18n = array(
 
 );
 
-function lic_laundry_tag_list($filter_out) {
+function lic_laundry_tag_list() {
     $lic_id_access    = get_field('field_569388a5a6fe1');
     if (! $lic_id_access) {
         $lic_id_access = array();
@@ -258,7 +258,6 @@ function lic_laundry_tag_list($filter_out) {
     }
     $tags = array_merge($lic_id_access, $lic_usage, $lic_distribution);
 
-    $tags = array_diff($tags, $filter_out);
     $tag_list= '';
     foreach ($tags as $tag) {
         $tag_list = $tag_list . ' +' . $tag;
@@ -353,7 +352,7 @@ echo '<header>';
 
 switch ($lic_type) {
     case 'CLARIN PUB':
-        echo '<h1 style="display: inline-block;" class="first">CLARIN PUB ' . $i18n['END_USER_LICENSE'][$lang] . lic_laundry_tag_list(array()) . ' ' . $lic_version . '</h1>';
+        echo '<h1 style="display: inline-block;" class="first">CLARIN PUB ' . $i18n['END_USER_LICENSE'][$lang] . lic_laundry_tag_list() . ' ' . $lic_version . '</h1>';
         $preamble = $i18n['PREAMBLE_PUB'][$lang];
         break;
 
@@ -384,9 +383,7 @@ switch ($lic_type) {
             update_field('field_5693b5854348d', $distribution_default);
         }
 
-        $filter_out = array_merge($id_access_default, $usage_default, $distribution_default);
-
-        echo '<h1 style="display: inline-block;" class="first">CLARIN ACA ' . $i18n['END_USER_LICENSE'][$lang] . lic_laundry_tag_list($filter_out) . ' ' . $lic_version . '</h1>';
+        echo '<h1 style="display: inline-block;" class="first">CLARIN ACA ' . $i18n['END_USER_LICENSE'][$lang] . lic_laundry_tag_list() . ' ' . $lic_version . '</h1>';
         $preamble =  $i18n['PREAMBLE_ACA'][$lang];
         break;
 
@@ -425,9 +422,7 @@ switch ($lic_type) {
             update_field('field_5693b5854348d', $distribution_default);
         }
 
-        $filter_out = array_merge($id_access_default, $usage_default, $distribution_default);
-
-        echo '<h1 style="display: inline-block;" class="first">CLARIN RES ' . $i18n['END_USER_LICENSE'][$lang] . lic_laundry_tag_list($filter_out) . ' ' . $lic_version . '</h1>';
+        echo '<h1 style="display: inline-block;" class="first">CLARIN RES ' . $i18n['END_USER_LICENSE'][$lang] . lic_laundry_tag_list() . ' ' . $lic_version . '</h1>';
 
         $preamble =  $i18n['PREAMBLE_RES'][$lang];
         break;
