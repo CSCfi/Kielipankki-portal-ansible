@@ -17,12 +17,12 @@
   loop: "{{ php_settings }}"
 
 - name: Is WordPress downloaded?
-  stat: 
+  stat:
     path: "{{ wordpress_directory }}/index.php"
   register: wp_dir
 
 - name: Create WordPress directory
-  file: 
+  file:
     path: "{{ wordpress_directory }}"
     owner: "{{ remote_deploy_user }}"
     group: "{{ remote_deploy_group }}"
@@ -84,7 +84,7 @@
            --path="{{ wordpress_directory }}"
   become_user: "{{ remote_deploy_user }}"
 
-  
+
 # Panel language
 - name: Install finnish language pack
   command: /usr/local/bin/wp language core install fi --activate
