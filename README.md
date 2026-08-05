@@ -101,7 +101,7 @@ To create an immediate backup from production:
 Re-Install the changes to staging. The menu background will be red to
 mark staging. It is recommended to add "--extra-vars clean=true" for
 the first run to completely reinstall wordpress.  "clean=true" wipes
-the whole /var/www/html directory. This might be overkill in some
+the whole /var/www/wordpress directory. This might be overkill in some
 situations.
 
 `ansible-playbook -i inventories/development portalPouta.yml --extra-vars clean=true`
@@ -130,8 +130,8 @@ This assumes that the pre-production server is otherwise ready.
 ## Switch to the new version
 
  - On pre-production run:
-   - ``sudo -u apache /usr/local/bin/wp config set WP_DEBUG false --raw --path=/var/www/html``
-   - ``sudo -u apache /usr/local/bin/wp super-cache flush --path=/var/www/html``
+   - ``sudo -u apache /usr/local/bin/wp config set WP_DEBUG false --raw --path=/var/www/wordpress``
+   - ``sudo -u apache /usr/local/bin/wp super-cache flush --path=/var/www/wordpress``
    - `sudo hostnamectl set-hostname portal-PROD`
    - `sudo systemctl restart opsview-agent`
  - Make sure the menu background is now black.
