@@ -9,10 +9,16 @@
       - unzip
     state: present
 
-- name: copy httpd.conf
-  copy: 
-    src: "{{ role_path }}/files/httpd/conf/"
-    dest: /etc/httpd/conf/
+- name: Install httpd.conf
+  template:
+    src: httpd.conf.j2
+    dest: /etc/httpd/conf/httpd.conf
+  notify: restart httpd
+
+- name: Install wordpress.conf
+  template:
+    src: wordpress.conf.j2
+    dest: /etc/httpd/conf.d/wordpress.conf
   notify: restart httpd
 
 - name: Move conf.d files
