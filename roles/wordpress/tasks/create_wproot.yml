@@ -1,0 +1,21 @@
+---
+# Remove wordpress
+# This is normally skipped, enforce by setting
+# clean by adding --extra-vars clean=true
+
+- name: "rm -rf wordpress dir (if clean=true)"
+  file: 
+    path: "{{ wordpress_directory }}"
+    state: absent
+  when: clean is defined and clean | bool
+
+- name: Create WordPress directory
+  file:
+    path: "{{ wordpress_directory }}"
+    owner: "{{ remote_deploy_user }}"
+    group: "{{ remote_deploy_group }}"
+    mode: 0755
+    state: directory
+  when: wp_dir.stat.isdir is not defined
+
+

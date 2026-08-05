@@ -2,8 +2,8 @@
 # Install and configure wordpress
 
 
+- import_tasks: create_wproot.yml
 - import_tasks: wp-cli.yml
-- import_tasks: remove_installation.yml
 - import_tasks: install.yml
 - import_tasks: theme.yml
 - import_tasks: files.yml
