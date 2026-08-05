@@ -312,7 +312,9 @@ function render_bibtex($lang,$row, $key) {
 	$bibtex .= " author={". ltrim($authors) ."},\n";
     }
     if ($year) $bibtex .= " year={".$year."},\n";
+    {% raw %}
     $bibtex .= " title={{".get_title($lang,$row)."}},\n";
+    {% endraw %}
     $bibtex .= " publisher={".get_publisher()."},\n";
     if ($type) $bibtex .= " type={".$type."},\n";
     $bibtex .= " url={".render_urn($lang, $row)."},\n";
@@ -338,7 +340,9 @@ function render_zotero($lang,$row, $key) {
 	$bibtex .= " author={". ltrim($authors) ."},\n";
     }
     if ($year) $bibtex .= " year={".$year."},\n";
+    {% raw %}
     $bibtex .= " title={{".get_title($lang, $row)."}},\n";
+    {% endraw %}
     $bibtex .= " publisher={".get_publisher()."},\n";
     if ($type) $bibtex .= " type={".$type."},\n";
     $bibtex .= " url={".render_urn($lang, $row)."},\n";
