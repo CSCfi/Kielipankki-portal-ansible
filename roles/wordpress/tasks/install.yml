@@ -21,15 +21,6 @@
     path: "{{ wordpress_directory }}/index.php"
   register: wp_dir
 
-- name: Create WordPress directory
-  file:
-    path: "{{ wordpress_directory }}"
-    owner: "{{ remote_deploy_user }}"
-    group: "{{ remote_deploy_group }}"
-    mode: 0755
-    state: directory
-  when: wp_dir.stat.isdir is not defined
-
 - name: "Download WordPress (version: {{ wordpress_version }})"
   command: /usr/local/bin/wp core download
            --version="{{ wordpress_version }}"
