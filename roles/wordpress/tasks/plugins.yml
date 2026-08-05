@@ -59,7 +59,7 @@
 
 
 - name: Configure wp-super-cache, shibboleth
-  command: "/usr/local/bin/wp {{ item }} --path=/var/www/html"
+  command: "/usr/local/bin/wp {{ item }} --path={{ wordpress_directory }}"
   args:
     chdir: "{{ wordpress_directory }}"
   become_user: "{{ remote_deploy_user }}"
