@@ -9,7 +9,7 @@ RewriteEngine On
  deny from all
 </Files>
 
-<Directory /var/www/html/>
+<Directory {{ wordpress_directory }}>
     AllowOverride All
     Options FollowSymLinks MultiViews
     Require host localhost
