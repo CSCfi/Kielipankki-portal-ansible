@@ -29,6 +29,13 @@
   become_user: "{{ remote_deploy_user }}"
   tags: update_kielipankki_theme
 
+- name: "Install popup.php (the reference instructions)"
+  template:
+    src: popup.php.j2
+    dest: "{{ wordpress_directory }}/wp-content/themes/kielipankki/popup.php"
+  become_user: "{{ remote_deploy_user }}"
+  tags: update_kielipankki_theme
+
 - name: Remove unused themes
   command: /usr/local/bin/wp theme delete --all
   args:
