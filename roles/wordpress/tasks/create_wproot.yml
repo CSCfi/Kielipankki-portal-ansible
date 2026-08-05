@@ -16,6 +16,3 @@
     group: "{{ remote_deploy_group }}"
     mode: 0755
     state: directory
-  when: wp_dir.stat.isdir is not defined
-
-
