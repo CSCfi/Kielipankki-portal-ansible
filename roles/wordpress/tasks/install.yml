@@ -85,7 +85,7 @@
 
 - name: Hacking Search
   replace:
-    path: /var/www/html/wp-content/languages/fi.po
+    path: "{{ wordpress_directory }}/wp-content/languages/fi.po"
     regexp: "{{ item.search }}"
     replace: "{{ item.replace }}"
     backup: yes
@@ -98,5 +98,5 @@
 - name: Compile fi.mo localisation file
   command: msgfmt -o fi.mo fi.po
   args:
-    chdir: "/var/www/html/wp-content/languages/"
+    chdir: "{{ wordpress_directory }}/wp-content/languages/"
   become_user: "{{ remote_deploy_user }}"
