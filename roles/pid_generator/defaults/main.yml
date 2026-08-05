@@ -1,5 +1,6 @@
 
-pid_documentroot: "/var/www/html/pid"
+# the generator resides in the wproot for now
+pid_documentroot: "{{ wordpress_directory }}/pid"
 
 pid_github_auth_token: "{{ lookup('passwordstore', 'lb_passwords/pid/github_auth_token')}}"
 
