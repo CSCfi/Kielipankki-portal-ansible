@@ -39,5 +39,3 @@
   args:
     chdir: "{{ wordpress_directory }}"
   become_user: "{{ remote_deploy_user }}"
-
-
