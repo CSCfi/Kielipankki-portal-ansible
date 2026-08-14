@@ -1,12 +1,18 @@
 ---
 # import necessary files for wordpress
 
-- name: Add htaccess to wordpress root
+- name: Install htaccess to wordpress root
   template: 
     src: wordpress-root-htaccess.j2 
     dest: "{{wordpress_directory}}/.htaccess"
     owner: "{{ remote_deploy_user }}"
-    
+
+- name: Install wordfence-waf.php to wordpress root
+  template: 
+    src: wordfence-waf.php.j2 
+    dest: "{{wordpress_directory}}/wordfence-waf.php"
+    owner: "{{ remote_deploy_user }}"
+
 - name: Add sum files
   copy:
     src: "{{ item }}"
@@ -16,7 +22,6 @@
   with_items:
     - "{{ role_path }}/files/aaggr.js"
     - "{{ role_path }}/files/attr.html"
-    - "{{ role_path }}/files/wordfence-waf.php"
 
 - name: Check if fonts have already been added 
   stat: 
