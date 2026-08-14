@@ -12,7 +12,6 @@ RewriteEngine On
 <Directory {{ wordpress_directory }}>
     AllowOverride All
     Options FollowSymLinks MultiViews
-    Require host localhost
     # Only allow from "our" pouta range
     Require ip 192.168.1
 </Directory>
