@@ -13,15 +13,15 @@
     dest: /tmp/pid_map.sql
 
 - name: Create fresh PID database
-  mysql_db:
+  ansible.mysql.mysql_db:
     name: "{{ db_name }}"
     state: import
-    login_user: "root" 
+    login_user: "root"
     login_password: "{{ mysql_root_password }}"
     target: /tmp/pid_map.sql
 
 - name: Create PID database user
-  mysql_user: 
+  ansible.mysql.mysql_user:
     name: "{{ db_user }}"
     password: "{{ db_password }}"
     priv: "{{ db_name }}.*:DROP,CREATE,SELECT,UPDATE,INSERT"
