@@ -13,7 +13,7 @@
     dest: /tmp/pid_map.sql
 
 - name: Create fresh PID database
-  ansible.mysql.mysql_db:
+  ansible.mariadb.mariadb_db:
     name: "{{ db_name }}"
     state: import
     login_user: "root"
@@ -21,7 +21,7 @@
     target: /tmp/pid_map.sql
 
 - name: Create PID database user
-  ansible.mysql.mysql_user:
+  ansible.mariadb.mariadb_user:
     name: "{{ db_user }}"
     password: "{{ db_password }}"
     priv: "{{ db_name }}.*:DROP,CREATE,SELECT,UPDATE,INSERT"
