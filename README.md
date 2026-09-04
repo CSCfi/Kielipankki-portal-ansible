@@ -19,8 +19,8 @@ Edit the Ansible script below servers/portal/.
 #  Deploying the Portal to cPouta
 
 ## Pre-requisites
-- Ansible >=2.5: https://docs.ansible.com/ansible/latest/installation_guide/index.html
-- Python 3: Needed by the OpenStack command line tools
+- Ansible >=2.21: https://docs.ansible.com/ansible/latest/installation_guide/index.html
+- Python 3.12-3.14: Needed by the OpenStack command line tools and Ansible
 - OpenStack [command line tools](https://docs.openstack.org/newton/user-guide/common/cli-install-openstack-command-line-clients.html) (also see [cPouta User guide](https://docs.csc.fi/cloud/pouta/command-line-tools/). Note: using apt or yum is not recommended, the tools available might be too old.
   - An easy way to install the tools is to install the tools within a virtual environment:
     ```

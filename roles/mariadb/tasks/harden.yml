@@ -8,7 +8,7 @@
   ignore_errors: true
 
 - name: Create install user
-  mysql_user:
+  ansible.mariadb.mariadb_user:
     name: "{{ wp_db_install_user }}"
     password: "{{ wp_db_install_password }}"
     login_user: root
@@ -17,15 +17,15 @@
     state: present
 
 - name: Delete anonymous MySQL server user for current hostname
-  mysql_user:
+  ansible.mariadb.mariadb_user:
     name: ""
-    host: "{{ ansible_hostname }}"
+    host: "{{ ansible_facts['hostname'] }}"
     state: absent
     login_user: root
     login_password: "{{ mysql_root_password }}"
 
 - name: Remove the test database
-  mysql_db:
+  ansible.mariadb.mariadb_db:
     name: test
     state: absent
     login_user: root

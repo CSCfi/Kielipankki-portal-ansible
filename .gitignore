@@ -74,3 +74,5 @@ wp-uploads.zip
 # Vim temp files
 *.sw?
 
+# Local empty ansible directory that some Ansible operations (e.g. ansible-lint) create
+.ansible
