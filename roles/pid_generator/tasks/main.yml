@@ -59,7 +59,7 @@
 
 - name: Copy certificates
   copy:
-    content: "{{ lookup('passwordstore', '{{ pid_passwordstore }}{{ item }} returnall=true')}}"
+    content: "{{ lookup('passwordstore', pid_passwordstore ~ item ~ ' returnall=true') }}"
     dest: "{{ pid_gen_home_dir }}/{{ item }}"
     owner: root
     group: apache
