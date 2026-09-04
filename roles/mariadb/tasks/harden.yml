@@ -19,7 +19,7 @@
 - name: Delete anonymous MySQL server user for current hostname
   ansible.mysql.mysql_user:
     name: ""
-    host: "{{ ansible_hostname }}"
+    host: "{{ ansible_facts['hostname'] }}"
     state: absent
     login_user: root
     login_password: "{{ mysql_root_password }}"
