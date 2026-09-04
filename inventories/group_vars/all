@@ -48,8 +48,8 @@ servers:
     security_groups: "{{ project_security_groups }}"
     network: "{{ network }}"
     meta:
-       hostname: "{{ pouta_instance_name }}"
-       group: "{{ instance_name }}"
+      hostname: "{{ pouta_instance_name }}"
+      group: "{{ instance_name }}"
 
 security_group_rules:
   - name: ping
