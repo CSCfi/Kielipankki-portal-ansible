@@ -1210,3 +1210,15 @@ table.tool_list .column-6 {
 .lbr-message-template > p:last-child {
     margin-bottom: 0;
 }
+
+/* Hide LBR application links for non-RES resources
+ *
+ * Executing JS code in computed fields  WP Data Access App builder computed
+ * fields is a paid feature, so we cannot insert or omit the application link
+ * image in the table editor. What we can do is set the class of each such link
+ * element to the LBR application URN, and then hide all LBR application links
+ * whose class has an empty string instead of an urn inserted.
+ */
+.lbr-link:not([class*="urn"]) {
+    display: none;
+}
