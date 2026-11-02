@@ -14,7 +14,7 @@ jQuery(document).ready(function(e) {
 		e.preventDefault();
         jQuery('.page-nav ul.nav').toggleClass('opened');
     });
-	
+
 });
 
 function Popup(url, width, height) {
@@ -29,6 +29,6 @@ function Popup(url, width, height) {
 }
 
 function RefPopup(corpus_id) {
-    var lang =  $('body').attr('lang');
+    var lang =  $('html').attr('lang');
     Popup("/viittaus?key="+encodeURIComponent(corpus_id)+"&lang="+lang, 800, 600);
 }
