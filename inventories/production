@@ -8,3 +8,5 @@ all:
     portal:
       ansible_host: 128.214.253.151
       ansible_user: almalinux
+  vars:
+    wpda_clone_resolution: new_home

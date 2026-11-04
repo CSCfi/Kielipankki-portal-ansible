@@ -75,6 +75,12 @@
            --path="{{ wordpress_directory }}"
   become_user: "{{ remote_deploy_user }}"
 
+- name: Configure Freemius clone resolution mode (avoids manual WP Data Access Premium license reactivation after restoring a production backup)
+  command: /usr/local/bin/wp config set FS__RESOLVE_CLONE_AS "{{ wpda_clone_resolution }}"
+           --path="{{ wordpress_directory }}"
+  become_user: "{{ remote_deploy_user }}"
+  tags: ['wpda_clone_resolution']
+
 
 # Panel language
 - name: Install finnish language pack

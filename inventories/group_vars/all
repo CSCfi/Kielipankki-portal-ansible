@@ -29,6 +29,11 @@ wp_db_install_password: "{{ lookup('passwordstore', 'lb_passwords/pouta/portal_d
 wp_db_password: "{{ lookup('passwordstore', 'lb_passwords/pouta/portal_wp_db_user')}}"
 wp_shib_spoof_key: "{{ lookup('passwordstore', 'lb_passwords/portal/wp_shib_spoof_key')}}"
 
+# Avoids needing to manually reactivate the WP Data Access Premium (Freemius) license
+# every time preprod is rebuilt from a production backup.
+# See https://freemius.com/help/documentation/wordpress-sdk/safe-mode-clone-resolution-duplicate-website/
+wpda_clone_resolution: temporary_duplicate
+
 # for backup role:
 backup_db_server:   "{{ wp_db_server }}"
 backup_db_port:     "{{ mysql_port }}"
