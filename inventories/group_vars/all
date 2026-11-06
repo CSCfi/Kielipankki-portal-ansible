@@ -29,6 +29,12 @@ wp_db_install_password: "{{ lookup('passwordstore', 'lb_passwords/pouta/portal_d
 wp_db_password: "{{ lookup('passwordstore', 'lb_passwords/pouta/portal_wp_db_user')}}"
 wp_shib_spoof_key: "{{ lookup('passwordstore', 'lb_passwords/portal/wp_shib_spoof_key')}}"
 
+# Plugins that are licensed/activated per-site (commercial/premium plugins) and
+# can't be reinstalled via `wp plugin install` like the plugins in
+# `wordpress_plugins` so their files must be fetched from production.
+premium_plugins_from_production:
+  - wp-data-access-premium
+
 # for backup role:
 backup_db_server:   "{{ wp_db_server }}"
 backup_db_port:     "{{ mysql_port }}"
@@ -130,7 +136,7 @@ wordpress_plugins:
 - { name: insert-pages , param: '' } # include one WP page into another WP page
 - { name: classic-editor , param: '' } # The "old" editor
 - { name: /tmp/wp-visual-icon-fonts.zip , param: '--force' } # Used at least in /aineistot
-- { name: wp-data-access , param: '' } # Used for resource and license database management
+#- { name: wp-data-access , param: '' } # Re-enable if needed for recreation of Portal without production to back up from
 
 
 
