@@ -136,7 +136,7 @@ wordpress_plugins:
 - { name: insert-pages , param: '' } # include one WP page into another WP page
 - { name: classic-editor , param: '' } # The "old" editor
 - { name: /tmp/wp-visual-icon-fonts.zip , param: '--force' } # Used at least in /aineistot
-- { name: wp-data-access , param: '' } # Used for resource and license database management
+#- { name: wp-data-access , param: '' } # Re-enable if needed for recreation of Portal without production to back up from
 
 
 
