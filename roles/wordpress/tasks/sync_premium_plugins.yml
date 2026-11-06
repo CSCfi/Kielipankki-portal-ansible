@@ -1,0 +1,58 @@
+---
+# Plugins listed in `premium_plugins_from_production` are licensed/activated
+# per-site (commercial/premium plugins) and can't simply be reinstalled via `wp
+# plugin install` like the plugins in `wordpress_plugins`. The backup/restore
+# pipeline in restore_data.yml only covers wp-content/uploads and the database,
+# not wp-content/plugins, so each one is instead fetched directly from the
+# already-licensed production server here.
+
+- name: Archive premium plugins from production
+  command: tar czf "/tmp/{{ item }}.tar.gz" -C "{{ wordpress_directory }}/wp-content/plugins" "{{ item }}"
+  loop: "{{ premium_plugins_from_production }}"
+  tags:
+    - never
+    - get_fresh_backup
+    - sync_premium_plugins
+  delegate_to: portal-prod
+
+- name: Download premium plugin archives from production
+  fetch:
+    src: "/tmp/{{ item }}.tar.gz"
+    dest: "./"
+    flat: yes
+  loop: "{{ premium_plugins_from_production }}"
+  tags:
+    - never
+    - get_fresh_backup
+    - sync_premium_plugins
+  delegate_to: portal-prod
+  become: no
+
+- name: Remove temporary premium plugin archives from production
+  file:
+    path: "/tmp/{{ item }}.tar.gz"
+    state: absent
+  loop: "{{ premium_plugins_from_production }}"
+  tags:
+    - never
+    - get_fresh_backup
+    - sync_premium_plugins
+  delegate_to: portal-prod
+
+- name: Install premium plugins from production
+  unarchive:
+    src: "{{ item }}.tar.gz"
+    dest: "{{ wordpress_directory }}/wp-content/plugins/"
+  loop: "{{ premium_plugins_from_production }}"
+  become_user: "{{ remote_deploy_user }}"
+  tags:
+    - update_wp_content
+    - sync_premium_plugins
+
+- name: Activate premium plugins
+  command: /usr/local/bin/wp plugin activate {{ item }} --path={{ wordpress_directory }}
+  loop: "{{ premium_plugins_from_production }}"
+  become_user: "{{ remote_deploy_user }}"
+  tags:
+    - update_wp_content
+    - sync_premium_plugins
