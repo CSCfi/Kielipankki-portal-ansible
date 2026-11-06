@@ -1,5 +1,6 @@
 # Don't commit backup files
 ???-kielipankki_portal_backup.tar.gz
+wp-data-access-premium.tar.gz
 
 # Windows image file caches
 Thumbs.db
